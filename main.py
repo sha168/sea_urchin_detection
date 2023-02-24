@@ -18,7 +18,7 @@ LR = 0.005
 WEIGHT_DECAY = 0.0005
 MOMENTUM = 0.9
 NUM_EPOCHS = 10
-BATCH_SIZE = 10
+BATCH_SIZE = 5
 
 def main():
     # train on the GPU or on the CPU, if a GPU is not available
