@@ -3,10 +3,10 @@ import utils
 import torch
 from dataset import CocoDataset
 
-TRAIN = 'experiments/AUDD/images/train'
-TEST = 'experiments/AUDD/images/test'
-TRAIN_ANN = 'experiments/AUDD/annotations/instances_train.json'
-TEST_ANN = 'experiments/AUDD/annotations/instances_test.json'
+TRAIN = 'experiment/AUDD/images/train'
+TEST = 'experiment/AUDD/images/test'
+TRAIN_ANN = 'experiment/AUDD/annotations/instances_train.json'
+TEST_ANN = 'experiment/AUDD/annotations/instances_test.json'
 
 # TRAIN = '/Users/sha168/Downloads/AUDD/images/train'
 # TEST = '/Users/sha168/Downloads/AUDD/images/test'
