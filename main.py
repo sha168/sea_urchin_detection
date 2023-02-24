@@ -18,6 +18,7 @@ LR = 0.005
 WEIGHT_DECAY = 0.0005
 MOMENTUM = 0.9
 NUM_EPOCHS = 10
+BATCH_SIZE = 10
 
 def main():
     # train on the GPU or on the CPU, if a GPU is not available
@@ -31,11 +32,11 @@ def main():
 
     # define training and validation data loaders
     data_loader = torch.utils.data.DataLoader(
-        dataset, batch_size=1, shuffle=False, num_workers=0,
+        dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=4,
         collate_fn=utils.collate_fn)
 
     data_loader_test = torch.utils.data.DataLoader(
-        dataset_test, batch_size=1, shuffle=False, num_workers=0,
+        dataset_test, batch_size=1, shuffle=False, num_workers=4,
         collate_fn=utils.collate_fn)
 
     # get the model using our helper function
