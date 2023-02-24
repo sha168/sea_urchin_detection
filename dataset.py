@@ -67,7 +67,6 @@ class CocoDataset(Dataset):
 
             image, target = self.transforms(image, target)
 
-
         # import matplotlib.pyplot as plt
         # import matplotlib.patches as patches
         # fig, ax = plt.subplots()
@@ -75,7 +74,7 @@ class CocoDataset(Dataset):
         # cl = target['labels']
         # # Draw boxes and add label to each box
         # for box, c in zip(anns,cl):
-        #     if c== 2:
+        #     if c== 1:
         #         bb = patches.Rectangle((box[0], box[1]), box[2]-box[0], box[3]-box[1], linewidth=2, edgecolor="blue", facecolor="none")
         #         ax.add_patch(bb)
         # ax.imshow(image.permute(1,2,0))

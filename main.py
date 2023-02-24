@@ -3,15 +3,6 @@ import utils
 import torch
 from dataset import CocoDataset
 
-TRAIN = '/experiment/AUDD/images/train'
-TEST = '/experiment/AUDD/images/test'
-TRAIN_ANN = '/experiment/AUDD/annotations/instances_train.json'
-TEST_ANN = '/experiment/AUDD/annotations/instances_test.json'
-
-# TRAIN = '/Users/sha168/Downloads/AUDD/images/train'
-# TEST = '/Users/sha168/Downloads/AUDD/images/test'
-# TRAIN_ANN = '/Users/sha168/Downloads/AUDD/annotations/instances_train.json'
-# TEST_ANN = '/Users/sha168/Downloads/AUDD/annotations/instances_test.json'
 
 N_CLASS = 4
 LR = 0.005
@@ -19,6 +10,17 @@ WEIGHT_DECAY = 0.0005
 MOMENTUM = 0.9
 NUM_EPOCHS = 10
 BATCH_SIZE = 5
+DATASET = 'UIQS'  # 'AUDD' or 'UIQS'
+
+TRAIN = '/experiment/' + DATASET + '/images/train'
+TEST = '/experiment/' + DATASET + '/images/test'
+TRAIN_ANN = '/experiment/' + DATASET + '/annotations/instances_train.json'
+TEST_ANN = '/experiment/' + DATASET + '/annotations/instances_test.json'
+
+# TRAIN = '/Users/sha168/Downloads/' + DATASET + '/images/train'
+# TEST = '/Users/sha168/Downloads/' + DATASET + '/images/test'
+# TRAIN_ANN = '/Users/sha168/Downloads/' + DATASET + '/annotations/instances_train.json'
+# TEST_ANN = '/Users/sha168/Downloads/' + DATASET + '/annotations/instances_test.json'
 
 def main():
     # train on the GPU or on the CPU, if a GPU is not available
