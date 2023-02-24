@@ -65,6 +65,9 @@ def main():
         # evaluate on the test dataset
         evaluate(model, data_loader_test, device=device)
 
+    # save trained model weights
+    torch.save(model.state_dict(), '/experiments/weights.pth')
+
     print("Training is done!")
 
 
