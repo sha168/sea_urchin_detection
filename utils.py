@@ -39,14 +39,13 @@ def collate_fn(batch):
 # define the training tranforms
 def get_train_transform():
     return A.Compose([
-        A.Flip(0.5),
-        A.RandomRotate90(0.5),
+        A.HorizontalFlip(0.5),
         A.MotionBlur(p=0.2),
         A.MedianBlur(blur_limit=3, p=0.1),
         A.Blur(blur_limit=3, p=0.1),
-        A.ColorJitter(p=0.5),
-        A.Normalize(mean=[0.485, 0.456, 0.406],
-                    std=[0.229, 0.224, 0.225], max_pixel_value=1.0),
+        # A.ColorJitter(p=0.5),
+        # A.Normalize(mean=[0.485, 0.456, 0.406],
+        #             std=[0.229, 0.224, 0.225], max_pixel_value=1.0),
         ToTensorV2(p=1.0),
     ], bbox_params={
         'format': 'pascal_voc',
@@ -55,8 +54,8 @@ def get_train_transform():
 # define the validation transforms
 def get_valid_transform():
     return A.Compose([
-        A.Normalize(mean=[0.485, 0.456, 0.406],
-                    std=[0.229, 0.224, 0.225], max_pixel_value=1.0),
+        # A.Normalize(mean=[0.485, 0.456, 0.406],
+        #             std=[0.229, 0.224, 0.225], max_pixel_value=1.0),
         ToTensorV2(p=1.0),
     ], bbox_params={
         'format': 'pascal_voc',
