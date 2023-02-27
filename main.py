@@ -77,7 +77,7 @@ if __name__ == '__main__':
     # define the optimizer
     optimizer = torch.optim.SGD(params, lr=LR, momentum=MOMENTUM, weight_decay=WEIGHT_DECAY)
     # and a learning rate scheduler
-    lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=3, gamma=0.1)
+    lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.1)
     # initialize the Averager class
     train_loss_hist = Averager()
     val_loss_hist = Averager()
@@ -107,6 +107,7 @@ if __name__ == '__main__':
         start = time.time()
         train_loss = train(train_loader, model)
         val_loss = validate(valid_loader, model)
+        # update the learning rate
         lr_scheduler.step()
         print(f"Epoch #{epoch} train loss: {train_loss_hist.value:.3f}")
         print(f"Epoch #{epoch} validation loss: {val_loss_hist.value:.3f}")
