@@ -12,13 +12,11 @@ DATASET = 'UIQS'  # 'AUDD' or 'UIQS'
 
 DEVICE = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
-TRAIN = '/experiment/' + DATASET + '/images/train'
-TEST = '/experiment/' + DATASET + '/images/test'
-TRAIN_ANN = '/experiment/' + DATASET + '/annotations/instances_train.json'
-TEST_ANN = '/experiment/' + DATASET + '/annotations/instances_test.json'
+TRAIN_DIR = '/experiment/' + DATASET + '/images/train'
+VALID_DIR = '/experiment/' + DATASET + '/images/test'
 
-TRAIN_DIR = '/Users/sha168/Downloads/' + DATASET + '/train'
-VALID_DIR = '/Users/sha168/Downloads/' + DATASET + '/test'
+# TRAIN_DIR = '/Users/sha168/Downloads/' + DATASET + '/train'
+# VALID_DIR = '/Users/sha168/Downloads/' + DATASET + '/test'
 
 # classes: 0 index is reserved for background
 CLASSES = [
