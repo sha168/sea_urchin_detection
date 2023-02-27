@@ -4,7 +4,7 @@ import numpy as np
 import os
 import glob as glob
 from xml.etree import ElementTree as et
-from config import CLASSES, RESIZE_TO, TRAIN_DIR, VALID_DIR, BATCH_SIZE
+from config import CLASSES, RESIZE_TO, TRAIN_DIR, VALID_DIR, BATCH_SIZE, NUM_WORKERS
 from torch.utils.data import Dataset, DataLoader
 from utils import collate_fn, get_train_transform, get_valid_transform
 
@@ -111,14 +111,14 @@ train_loader = DataLoader(
     train_dataset,
     batch_size=BATCH_SIZE,
     shuffle=True,
-    num_workers=0,
+    num_workers=NUM_WORKERS,
     collate_fn=collate_fn
 )
 valid_loader = DataLoader(
     valid_dataset,
     batch_size=BATCH_SIZE,
     shuffle=False,
-    num_workers=0,
+    num_workers=NUM_WORKERS,
     collate_fn=collate_fn
 )
 print(f"Number of training samples: {len(train_dataset)}")

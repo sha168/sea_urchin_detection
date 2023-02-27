@@ -123,8 +123,8 @@ if __name__ == '__main__':
             valid_ax.plot(val_loss, color='red')
             valid_ax.set_xlabel('iterations')
             valid_ax.set_ylabel('validation loss')
-            figure_1.savefig(f"{OUT_DIR}/train_loss_{epoch + 1}.png")
-            figure_2.savefig(f"{OUT_DIR}/valid_loss_{epoch + 1}.png")
+            figure_1.savefig(f"{OUT_DIR}/train_loss.png")  # _{epoch + 1}
+            figure_2.savefig(f"{OUT_DIR}/valid_loss.png")  # _{epoch + 1}
             print('SAVING PLOTS COMPLETE...')
 
         if (epoch + 1) == NUM_EPOCHS:  # save loss plots and model once at the end
