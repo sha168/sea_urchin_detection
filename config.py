@@ -14,7 +14,7 @@ DATASET = 'UIQS'  # 'AUDD' or 'UIQS'
 # whether to visualize images after crearing the data loaders
 VISUALIZE_TRANSFORMED_IMAGES = False
 
-OUT_DIR = 'results_audd'
+OUT_DIR = 'results_uiqs'
 Path(OUT_DIR).mkdir(parents=True, exist_ok=True)
 
 DEVICE = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
