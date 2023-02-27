@@ -2,8 +2,8 @@ import torch
 from pathlib import Path
 
 
-BATCH_SIZE = 8  # increase / decrease according to GPU memeory
-RESIZE_TO = 512  # resize the image for training and transforms
+BATCH_SIZE = 10  # increase / decrease according to GPU memeory
+RESIZE_TO = 255  # resize the image for training and transforms
 NUM_EPOCHS = 100  # number of epochs to train for
 NUM_WORKERS = 4
 LR = 0.001
