@@ -9,12 +9,12 @@ NUM_WORKERS = 4
 LR = 0.001
 WEIGHT_DECAY = 0.0005
 MOMENTUM = 0.9
-DATASET = 'UIQS'  # 'AUDD' or 'UIQS'
+DATASET = 'AUDD'  # 'AUDD' or 'UIQS'
 
 # whether to visualize images after crearing the data loaders
 VISUALIZE_TRANSFORMED_IMAGES = False
 
-OUT_DIR = 'results'
+OUT_DIR = 'results_audd'
 Path(OUT_DIR).mkdir(parents=True, exist_ok=True)
 
 DEVICE = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
