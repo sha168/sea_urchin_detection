@@ -1,4 +1,5 @@
 import torch
+from pathlib import Path
 
 
 BATCH_SIZE = 10  # increase / decrease according to GPU memeory
@@ -9,7 +10,9 @@ LR = 0.0005
 WEIGHT_DECAY = 0.0005
 MOMENTUM = 0.9
 DATASET = 'UIQS'  # 'AUDD' or 'UIQS'
+
 OUT_DIR = 'results'
+Path(OUT_DIR).mkdir(parents=True, exist_ok=True)
 
 DEVICE = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
