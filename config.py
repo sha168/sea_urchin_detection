@@ -27,6 +27,6 @@ NUM_CLASSES = 4
 VISUALIZE_TRANSFORMED_IMAGES = False
 
 # location to save model and plots
-OUT_DIR = '../outputs'
+OUT_DIR = 'results'
 SAVE_PLOTS_EPOCH = 2 # save loss plots after these many epochs
 SAVE_MODEL_EPOCH = 2 # save model after these many epochs
