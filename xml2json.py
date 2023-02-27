@@ -29,28 +29,17 @@ def move_xml_files(file_list, destination_path):
         shutil.copy(file, destination_path)
     return
 
-move_img_files(train_names,train)
-move_img_files(val_names,val)
-move_xml_files(train_names,train_annot)
-move_xml_files(val_names,val_annot)
+move_img_files(train_names, train)
+move_img_files(val_names, val)
+move_xml_files(train_names, train_annot)
+move_xml_files(val_names, val_annot)
 
 # from https://github.com/CivilNet/Gemfield/blob/master/src/python/pascal_voc_xml2json/pascal_voc_xml2json.py
 import xml.etree.ElementTree as ET
 import os
 import json
 
-coco = dict()
-coco['images'] = []
-coco['type'] = 'instances'
-coco['annotations'] = []
-coco['categories'] = []
 
-category_set = dict()
-image_set = set()
-
-category_item_id = 0
-image_id = 20180000000
-annotation_id = 0
 
 
 def addCatItem(name):
@@ -212,5 +201,28 @@ def build_coco_annot(xml_path, output_path):
     parseXmlFiles(xml_path)
     json.dump(coco, open(output_path, 'w'))
 
+category_item_id = 0
+image_id = 20180000000
+annotation_id = 0
+
+coco = dict()
+coco['images'] = []
+coco['type'] = 'instances'
+coco['annotations'] = []
+coco['categories'] = []
+
+category_set = dict()
+image_set = set()
+
+
 build_coco_annot(train_annot, "/Users/sha168/Downloads/UIQS/annotations/instances_train.json")
+
+coco = dict()
+coco['images'] = []
+coco['type'] = 'instances'
+coco['annotations'] = []
+coco['categories'] = []
+
+category_set = dict()
+image_set = set()
 build_coco_annot(val_annot, "/Users/sha168/Downloads/UIQS/annotations/instances_test.json")

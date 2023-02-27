@@ -17,10 +17,10 @@ TEST = '/experiment/' + DATASET + '/images/test'
 TRAIN_ANN = '/experiment/' + DATASET + '/annotations/instances_train.json'
 TEST_ANN = '/experiment/' + DATASET + '/annotations/instances_test.json'
 
-# TRAIN = '/Users/sha168/Downloads/' + DATASET + '/images/train'
-# TEST = '/Users/sha168/Downloads/' + DATASET + '/images/test'
-# TRAIN_ANN = '/Users/sha168/Downloads/' + DATASET + '/annotations/instances_train.json'
-# TEST_ANN = '/Users/sha168/Downloads/' + DATASET + '/annotations/instances_test.json'
+TRAIN = '/Users/sha168/Downloads/' + DATASET + '/images/train'
+TEST = '/Users/sha168/Downloads/' + DATASET + '/images/test'
+TRAIN_ANN = '/Users/sha168/Downloads/' + DATASET + '/annotations/instances_train.json'
+TEST_ANN = '/Users/sha168/Downloads/' + DATASET + '/annotations/instances_test.json'
 
 def main():
     # train on the GPU or on the CPU, if a GPU is not available
@@ -68,7 +68,7 @@ def main():
         evaluate(model, data_loader_test, device=device)
 
     # save trained model weights
-    torch.save(model.state_dict(), '/experiments/weights.pth')
+    torch.save(model.state_dict(), '/experiment/weights.pth')
 
     print("Training is done!")
 

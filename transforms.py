@@ -52,6 +52,13 @@ class PILToTensor(nn.Module):
         image = F.pil_to_tensor(image)
         return image, target
 
+class Normalize:
+    def __init__(self):
+        self.norm = T.Normalize(mean=[0.485, 0.456, 0.406],
+                                std=[0.229, 0.224, 0.225])
+    def __call__(self, image, target):
+        image = self.norm(image)
+        return image, target
 
 class ConvertImageDtype(nn.Module):
     def __init__(self, dtype: torch.dtype) -> None:
