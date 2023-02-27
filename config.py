@@ -6,10 +6,13 @@ BATCH_SIZE = 10  # increase / decrease according to GPU memeory
 RESIZE_TO = 512  # resize the image for training and transforms
 NUM_EPOCHS = 100  # number of epochs to train for
 NUM_WORKERS = 4
-LR = 0.0005
+LR = 0.001
 WEIGHT_DECAY = 0.0005
 MOMENTUM = 0.9
 DATASET = 'UIQS'  # 'AUDD' or 'UIQS'
+
+# whether to visualize images after crearing the data loaders
+VISUALIZE_TRANSFORMED_IMAGES = False
 
 OUT_DIR = 'results'
 Path(OUT_DIR).mkdir(parents=True, exist_ok=True)
@@ -23,12 +26,16 @@ VALID_DIR = '/experiment/' + DATASET + '/test'
 # VALID_DIR = '/Users/sha168/Downloads/' + DATASET + '/test'
 
 # classes: 0 index is reserved for background
-CLASSES = [
-    'background', 'urchin', 'holothurian', 'scallop'
-]
-NUM_CLASSES = 4
-# whether to visualize images after crearing the data loaders
-VISUALIZE_TRANSFORMED_IMAGES = False
+if DATASET == 'UIQS':
+    CLASSES = [
+        'background', 'urchin', 'holothurian', 'scallop'
+    ]
+elif DATASET == 'AUDD':
+    CLASSES = [
+        'background', 'seacucumber', 'seaurchin', 'scallop'
+    ]
+
+NUM_CLASSES = len(CLASSES)
 
 # location to save model and plots
 SAVE_PLOTS_EPOCH = 2  # save loss plots after these many epochs
