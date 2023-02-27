@@ -217,6 +217,11 @@ image_set = set()
 
 build_coco_annot(train_annot, "/Users/sha168/Downloads/UIQS/annotations/instances_train.json")
 
+
+category_item_id = 0
+image_id = 20180000000
+annotation_id = 0
+
 coco = dict()
 coco['images'] = []
 coco['type'] = 'instances'

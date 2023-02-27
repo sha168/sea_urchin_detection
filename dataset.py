@@ -64,7 +64,6 @@ class CocoDataset(Dataset):
         }
 
         if self.transforms is not None:
-
             image, target = self.transforms(image, target)
 
         # import matplotlib.pyplot as plt

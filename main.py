@@ -5,7 +5,7 @@ from dataset import CocoDataset
 
 
 N_CLASS = 4
-LR = 0.0005
+LR = 0.005
 WEIGHT_DECAY = 0.0005
 MOMENTUM = 0.9
 NUM_EPOCHS = 10

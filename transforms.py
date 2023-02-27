@@ -60,6 +60,7 @@ class Normalize:
         image = self.norm(image)
         return image, target
 
+
 class ConvertImageDtype(nn.Module):
     def __init__(self, dtype: torch.dtype) -> None:
         super().__init__()
