@@ -1,6 +1,7 @@
 from config import DEVICE, NUM_CLASSES, NUM_EPOCHS, OUT_DIR
 from config import VISUALIZE_TRANSFORMED_IMAGES
 from config import SAVE_PLOTS_EPOCH, SAVE_MODEL_EPOCH
+from config import LR, WEIGHT_DECAY, MOMENTUM
 from model import create_model
 from utils import Averager
 from tqdm.auto import tqdm
@@ -74,7 +75,7 @@ if __name__ == '__main__':
     # get the model parameters
     params = [p for p in model.parameters() if p.requires_grad]
     # define the optimizer
-    optimizer = torch.optim.SGD(params, lr=0.001, momentum=0.9, weight_decay=0.0005)
+    optimizer = torch.optim.SGD(params, lr=LR, momentum=MOMENTUM, weight_decay=WEIGHT_DECAY)
     # initialize the Averager class
     train_loss_hist = Averager()
     val_loss_hist = Averager()
