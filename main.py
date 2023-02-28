@@ -43,32 +43,32 @@ def train(train_data_loader, model):
     return train_loss_list
 
 
-# # function for running validation iterations
-# def validate(valid_data_loader, model):
-#     print('Validating')
-#     global val_itr
-#     global val_loss_list
-#
-#     # initialize tqdm progress bar
-#     prog_bar = tqdm(valid_data_loader, total=len(valid_data_loader))
-#
-#     model.eval()
-#     for i, data in enumerate(prog_bar):
-#         images, targets = data
-#
-#         images = list(image.to(DEVICE) for image in images)
-#         targets = [{k: v.to(DEVICE) for k, v in t.items()} for t in targets]
-#
-#         with torch.no_grad():
-#             loss_dict = model(images, targets)
-#         losses = sum(loss for loss in loss_dict.values())
-#         loss_value = losses.item()
-#         val_loss_list.append(loss_value)
-#         val_loss_hist.send(loss_value)
-#         val_itr += 1
-#         # update the loss value beside the progress bar for each iteration
-#         prog_bar.set_description(desc=f"Loss: {loss_value:.4f}")
-#     return val_loss_list
+# function for running validation iterations
+def validate(valid_data_loader, model):
+    print('Validating')
+    global val_itr
+    global val_loss_list
+
+    # initialize tqdm progress bar
+    prog_bar = tqdm(valid_data_loader, total=len(valid_data_loader))
+
+    model.eval()
+    for i, data in enumerate(prog_bar):
+        images, targets = data
+
+        images = list(image.to(DEVICE) for image in images)
+        targets = [{k: v.to(DEVICE) for k, v in t.items()} for t in targets]
+
+        with torch.no_grad():
+            loss_dict = model(images, targets)
+        losses = sum(loss for loss in loss_dict.values())
+        loss_value = losses.item()
+        val_loss_list.append(loss_value)
+        val_loss_hist.send(loss_value)
+        val_itr += 1
+        # update the loss value beside the progress bar for each iteration
+        prog_bar.set_description(desc=f"Loss: {loss_value:.4f}")
+    return val_loss_list
 
 
 if __name__ == '__main__':
@@ -83,6 +83,7 @@ if __name__ == '__main__':
     lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=30, gamma=0.1)
     # initialize the Averager class
     train_loss_hist = Averager()
+    val_loss_hist = Averager()
     train_precision_hist = Averager()
     val_precision_hist = Averager()
     train_itr = 1
@@ -90,6 +91,7 @@ if __name__ == '__main__':
     # train and validation loss lists to store loss values of all...
     # ... iterations till ena and plot graphs for all iterations
     train_loss_list = []
+    val_loss_list = []
     train_precision_list = []
     val_precision_list = []
     # name to save the trained model with
@@ -104,6 +106,7 @@ if __name__ == '__main__':
         print(f"\nEPOCH {epoch + 1} of {NUM_EPOCHS}")
         # reset the training and validation loss histories for the current epoch
         train_loss_hist.reset()
+        val_loss_hist.reset()
         train_precision_hist.reset()
         val_precision_hist.reset()
         # create two subplots, one for each, training and validation
@@ -112,7 +115,7 @@ if __name__ == '__main__':
         # start timer and carry out training and validation
         start = time.time()
         train_loss = train(train_loader, model)
-        # val_loss = validate(valid_loader, model)
+        val_loss = validate(valid_loader, model)
         train_evaluator = evaluate(model, train_loader, DEVICE)
         val_evaluator = evaluate(model, valid_loader, DEVICE)
 
@@ -123,8 +126,7 @@ if __name__ == '__main__':
         train_precision_hist.send(train_stats[1])
         val_precision_list.append(val_stats[1])
         val_precision_hist.send(val_stats[1])
-        train_itr += 1
-        val_itr += 1
+
         # update the learning rate
         lr_scheduler.step()
         print(f"Epoch #{epoch} train loss: {train_loss_hist.value:.3f}")
@@ -136,28 +138,32 @@ if __name__ == '__main__':
             print('SAVING MODEL COMPLETE...\n')
 
         if (epoch + 1) % SAVE_PLOTS_EPOCH == 0:  # save loss plots after n epochs
-            train_ax.plot(train_loss, color='blue')
+            train_ax.plot(train_loss, color='blue', label='train')
+            train_ax.plot(val_loss, color='red', label='val')
+            train_ax.legend()
             train_ax.set_xlabel('iterations')
-            train_ax.set_ylabel('train loss')
+            train_ax.set_ylabel('loss')
             valid_ax.plot(val_precision_list, color='red', label='val')
             valid_ax.plot(train_precision_list, color='blue', label='train')
             valid_ax.set_xlabel('iterations')
             valid_ax.set_ylabel('precision')
             valid_ax.legend()
-            figure_1.savefig(f"{OUT_DIR}/train_loss.png")  # _{epoch + 1}
+            figure_1.savefig(f"{OUT_DIR}/loss.png")  # _{epoch + 1}
             figure_2.savefig(f"{OUT_DIR}/precision.png")  # _{epoch + 1}
             print('SAVING PLOTS COMPLETE...')
 
         if (epoch + 1) == NUM_EPOCHS:  # save loss plots and model once at the end
-            train_ax.plot(train_loss, color='blue')
+            train_ax.plot(train_loss, color='blue', label='train')
+            train_ax.plot(val_loss, color='red', label='val')
+            train_ax.legend()
             train_ax.set_xlabel('iterations')
-            train_ax.set_ylabel('train loss')
+            train_ax.set_ylabel('loss')
             valid_ax.plot(val_precision_list, color='red', label='val')
             valid_ax.plot(train_precision_list, color='blue', label='train')
             valid_ax.legend()
             valid_ax.set_xlabel('iterations')
             valid_ax.set_ylabel('precision')
-            figure_1.savefig(f"{OUT_DIR}/train_loss_{epoch + 1}.png")
+            figure_1.savefig(f"{OUT_DIR}/loss_{epoch + 1}.png")
             figure_2.savefig(f"{OUT_DIR}/precision_{epoch + 1}.png")
             torch.save(model.state_dict(), f"{OUT_DIR}/model{epoch + 1}.pth")
 
