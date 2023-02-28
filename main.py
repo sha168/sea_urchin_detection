@@ -86,6 +86,8 @@ if __name__ == '__main__':
     val_loss_hist = Averager()
     train_precision_hist = Averager()
     val_precision_hist = Averager()
+    train_recall_hist = Averager()
+    val_recall_hist = Averager()
     train_itr = 1
     val_itr = 1
     # train and validation loss lists to store loss values of all...
@@ -94,6 +96,8 @@ if __name__ == '__main__':
     val_loss_list = []
     train_precision_list = []
     val_precision_list = []
+    train_recall_list = []
+    val_recall_list = []
     # name to save the trained model with
     MODEL_NAME = 'model'
     # whether to show transformed images from data loader or not
@@ -109,6 +113,8 @@ if __name__ == '__main__':
         val_loss_hist.reset()
         train_precision_hist.reset()
         val_precision_hist.reset()
+        train_recall_hist.reset()
+        val_recall_hist.reset()
         # create two subplots, one for each, training and validation
         figure_1, train_ax = plt.subplots()
         figure_2, valid_ax = plt.subplots()
@@ -124,8 +130,13 @@ if __name__ == '__main__':
 
         train_precision_list.append(train_stats[1])
         train_precision_hist.send(train_stats[1])
+        train_recall_list.append(train_stats[8])
+        train_recall_hist.send(train_stats[8])
         val_precision_list.append(val_stats[1])
         val_precision_hist.send(val_stats[1])
+        val_recall_list.append(val_stats[8])
+        val_recall_hist.send(val_stats[8])
+
 
         # update the learning rate
         lr_scheduler.step()
@@ -143,11 +154,15 @@ if __name__ == '__main__':
             train_ax.legend()
             train_ax.set_xlabel('iterations')
             train_ax.set_ylabel('loss')
-            valid_ax.plot(val_precision_list, color='red', label='val')
-            valid_ax.plot(train_precision_list, color='blue', label='train')
+            valid_ax.plot(val_precision_list, color='red', label='val precision')
+            valid_ax.plot(train_precision_list, color='blue', label='train precision')
             valid_ax.set_xlabel('iterations')
             valid_ax.set_ylabel('precision')
             valid_ax.legend()
+            valid_ax2 = valid_ax.twinx()
+            valid_ax2.plot(val_recall_list, color='red', linestyle='--', label='val recall')
+            valid_ax2.plot(train_recall_list, color='blue', linestyle='--', label='train recall')
+            valid_ax2.set_ylabel('recall')
             figure_1.savefig(f"{OUT_DIR}/loss.png")  # _{epoch + 1}
             figure_2.savefig(f"{OUT_DIR}/precision.png")  # _{epoch + 1}
             print('SAVING PLOTS COMPLETE...')
