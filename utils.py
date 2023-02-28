@@ -240,7 +240,7 @@ def draw_boxes(boxes, labels, image):
             (int(box[2]), int(box[3])),
             color, 2
         )
-        cv2.putText(image, labels[i], (int(box[0]), int(box[1]-5)),
+        cv2.putText(image, str(labels[i]), (int(box[0]), int(box[1]-5)),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.8, color, 2,
                     lineType=cv2.LINE_AA)
     cv2.imwrite(f"{OUT_DIR}/image_{i}.jpg", image)
