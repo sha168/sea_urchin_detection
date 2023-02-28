@@ -229,9 +229,9 @@ def get_valid_transform():
     })
 
 
-def draw_boxes(boxes, labels, image):
+def draw_boxes(boxes, labels, image, id):
     # read the image with OpenCV
-    image = cv2.cvtColor(np.asarray(image), cv2.COLOR_BGR2RGB)
+    image = cv2.cvtColor(np.asarray(image)*255, cv2.COLOR_BGR2RGB)
     for i, box in enumerate(boxes):
         color = COLORS[labels[i]]
         cv2.rectangle(
@@ -243,7 +243,7 @@ def draw_boxes(boxes, labels, image):
         cv2.putText(image, str(labels[i]), (int(box[0]), int(box[1]-5)),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.8, color, 2,
                     lineType=cv2.LINE_AA)
-    cv2.imwrite(f"{OUT_DIR}/image_{i}.jpg", image)
+    cv2.imwrite(f"{OUT_DIR}/image_{id}.jpg", image)
 
 
 def show_tranformed_image(train_loader):

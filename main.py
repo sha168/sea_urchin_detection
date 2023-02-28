@@ -96,7 +96,7 @@ def predict(data_loader, model):
         labels_ = prediction['labels'].cpu().numpy()
         image_ = image.permute(1, 2, 0).cpu().numpy()
 
-        draw_boxes(boxes_, labels_, image_)
+        draw_boxes(boxes_, labels_, image_, i)
 
 
 
