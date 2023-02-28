@@ -163,7 +163,7 @@ if __name__ == '__main__':
             valid_ax2.plot(val_recall_list, color='red', linestyle='--', label='val recall')
             valid_ax2.plot(train_recall_list, color='blue', linestyle='--', label='train recall')
             valid_ax2.set_ylabel('recall')
-            valid_ax2.legend()
+            valid_ax2.legend(loc='lower right')
             figure_1.savefig(f"{OUT_DIR}/loss.png")  # _{epoch + 1}
             figure_2.savefig(f"{OUT_DIR}/precision.png")  # _{epoch + 1}
             print('SAVING PLOTS COMPLETE...')
@@ -183,7 +183,7 @@ if __name__ == '__main__':
             valid_ax2.plot(val_recall_list, color='red', linestyle='--', label='val recall')
             valid_ax2.plot(train_recall_list, color='blue', linestyle='--', label='train recall')
             valid_ax2.set_ylabel('recall')
-            valid_ax2.legend()
+            valid_ax2.legend(loc='lower right')
             figure_1.savefig(f"{OUT_DIR}/loss_{epoch + 1}.png")
             figure_2.savefig(f"{OUT_DIR}/precision_{epoch + 1}.png")
             torch.save(model.state_dict(), f"{OUT_DIR}/model{epoch + 1}.pth")
