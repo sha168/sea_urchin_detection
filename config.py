@@ -1,6 +1,6 @@
 import torch
 from pathlib import Path
-
+import numpy as np
 
 BATCH_SIZE = 10  # increase / decrease according to GPU memeory
 RESIZE_TO = 512  # 512  # resize the image for training and transforms
@@ -9,12 +9,12 @@ NUM_WORKERS = 4
 LR = 0.001
 WEIGHT_DECAY = 0.0005
 MOMENTUM = 0.9
-DATASET = 'AUDD'  # 'AUDD' or 'UIQS'
+DATASET = 'UIQS'  # 'AUDD' or 'UIQS'
 
 # whether to visualize images after crearing the data loaders
 VISUALIZE_TRANSFORMED_IMAGES = False
 
-OUT_DIR = 'results_audd'
+OUT_DIR = 'results_uiqs'
 Path(OUT_DIR).mkdir(parents=True, exist_ok=True)
 
 DEVICE = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
@@ -36,6 +36,7 @@ elif DATASET == 'AUDD':
     ]
 
 NUM_CLASSES = len(CLASSES)
+COLORS = np.random.uniform(0, 255, size=(NUM_CLASSES, 3))
 
 # location to save model and plots
 SAVE_PLOTS_EPOCH = 2  # save loss plots after these many epochs

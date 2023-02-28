@@ -9,7 +9,7 @@ from datasets import train_loader, valid_loader
 import torch
 import matplotlib.pyplot as plt
 import time
-from utils import evaluate
+from utils import evaluate, draw_boxes
 plt.style.use('ggplot')
 
 
@@ -69,6 +69,36 @@ def validate(valid_data_loader, model):
         # update the loss value beside the progress bar for each iteration
         prog_bar.set_description(desc=f"Loss: {loss_value:.4f}")
     return val_loss_list
+
+
+def predict(data_loader, model):
+    print('Validating')
+    global val_itr
+    global val_loss_list
+
+    # initialize tqdm progress bar
+    prog_bar = tqdm(data_loader, total=len(data_loader))
+
+    model.eval()
+    for i, data in enumerate(prog_bar):
+        images, targets = data
+
+        images = list(image.to(DEVICE) for image in images)
+
+        with torch.no_grad():
+            boxes, labels, scores = model(images)
+
+        break
+
+    for i, image in enumerate(images):
+        boxes_ = boxes[i].cpu().numpy()
+        labels_ = labels[i].cpu().numpy()
+        image_ = image.permute(1, 2, 0).cpu().numpy()
+
+        draw_boxes(boxes_, labels_, image_)
+
+
+
 
 
 if __name__ == '__main__':
@@ -137,6 +167,8 @@ if __name__ == '__main__':
         val_recall_list.append(val_stats[8])
         val_recall_hist.send(val_stats[8])
 
+        if (epoch + 1) % SAVE_PLOTS_EPOCH == 0:
+            predict(valid_loader, model)
 
         # update the learning rate
         lr_scheduler.step()

@@ -11,7 +11,7 @@ import torch.distributed as dist
 import torchvision
 from coco_eval import CocoEvaluator
 from coco_utils import get_coco_api_from_dataset
-
+from config import COLORS, OUT_DIR
 
 # this class keeps track of the training and validation loss values...
 # ... and helps to get the average for each epoch as well
@@ -227,6 +227,23 @@ def get_valid_transform():
         'format': 'pascal_voc',
         'label_fields': ['labels']
     })
+
+
+def draw_boxes(boxes, labels, image):
+    # read the image with OpenCV
+    image = cv2.cvtColor(np.asarray(image), cv2.COLOR_BGR2RGB)
+    for i, box in enumerate(boxes):
+        color = COLORS[labels[i]]
+        cv2.rectangle(
+            image,
+            (int(box[0]), int(box[1])),
+            (int(box[2]), int(box[3])),
+            color, 2
+        )
+        cv2.putText(image, labels[i], (int(box[0]), int(box[1]-5)),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.8, color, 2,
+                    lineType=cv2.LINE_AA)
+    cv2.imwrite(f"{OUT_DIR}/image_{i}.jpg", image)
 
 
 def show_tranformed_image(train_loader):
