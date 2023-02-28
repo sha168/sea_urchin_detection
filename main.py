@@ -52,7 +52,7 @@ def validate(valid_data_loader, model):
     # initialize tqdm progress bar
     prog_bar = tqdm(valid_data_loader, total=len(valid_data_loader))
 
-    model.eval()
+    # model.eval()
     for i, data in enumerate(prog_bar):
         images, targets = data
 
@@ -115,7 +115,7 @@ if __name__ == '__main__':
         val_precision_hist.reset()
         train_recall_hist.reset()
         val_recall_hist.reset()
-        # create two subplots, one for each, training and validation
+        # create two subplots, one for each, loss and precision/recall
         figure_1, train_ax = plt.subplots()
         figure_2, valid_ax = plt.subplots()
         # start timer and carry out training and validation
@@ -163,6 +163,7 @@ if __name__ == '__main__':
             valid_ax2.plot(val_recall_list, color='red', linestyle='--', label='val recall')
             valid_ax2.plot(train_recall_list, color='blue', linestyle='--', label='train recall')
             valid_ax2.set_ylabel('recall')
+            valid_ax2.legend()
             figure_1.savefig(f"{OUT_DIR}/loss.png")  # _{epoch + 1}
             figure_2.savefig(f"{OUT_DIR}/precision.png")  # _{epoch + 1}
             print('SAVING PLOTS COMPLETE...')
@@ -178,6 +179,11 @@ if __name__ == '__main__':
             valid_ax.legend()
             valid_ax.set_xlabel('iterations')
             valid_ax.set_ylabel('precision')
+            valid_ax2 = valid_ax.twinx()
+            valid_ax2.plot(val_recall_list, color='red', linestyle='--', label='val recall')
+            valid_ax2.plot(train_recall_list, color='blue', linestyle='--', label='train recall')
+            valid_ax2.set_ylabel('recall')
+            valid_ax2.legend()
             figure_1.savefig(f"{OUT_DIR}/loss_{epoch + 1}.png")
             figure_2.savefig(f"{OUT_DIR}/precision_{epoch + 1}.png")
             torch.save(model.state_dict(), f"{OUT_DIR}/model{epoch + 1}.pth")
