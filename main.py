@@ -86,13 +86,14 @@ def predict(data_loader, model):
         images = list(image.to(DEVICE) for image in images)
 
         with torch.no_grad():
-            boxes, labels, scores = model(images)
+            predictions = model(images)
 
         break
 
     for i, image in enumerate(images):
-        boxes_ = boxes[i].cpu().numpy()
-        labels_ = labels[i].cpu().numpy()
+        prediction = predictions[i]
+        boxes_ = prediction['boxes'].cpu().numpy()
+        labels_ = prediction['labels'].cpu().numpy()
         image_ = image.permute(1, 2, 0).cpu().numpy()
 
         draw_boxes(boxes_, labels_, image_)
