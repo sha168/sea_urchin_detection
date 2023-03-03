@@ -12,7 +12,7 @@ from torchvision.transforms import transforms
 
 from config import NUM_CLASSES, PRETRAINED, DEVICE, RESIZE_TO, PERIOD, PROB_THRES, VIDEO
 from bbox import BBox
-
+from IPython import display
 
 def _infer_stream(path_to_input_stream_endpoint, period_of_inference, prob_thresh):
 
@@ -71,7 +71,7 @@ def _infer_stream(path_to_input_stream_endpoint, period_of_inference, prob_thres
                     rect = patches.Rectangle((bbox[0], bbox[1]), bbox[2]-bbox[0], bbox[3]-bbox[1], linewidth=1,
                                              edgecolor=color, facecolor='none')
                     ax.add_patch(rect)
-                    text = plt.text(bbox[2], bbox[3], s=f'{category:s} {prob:.3f}', color=color)
+                    plt.text(bbox[2], bbox[3], s=f'{category:s} {prob:.3f}', color=color)
 
                     # Add the patch to the Axes
                     ax.add_patch(rect)
@@ -81,7 +81,9 @@ def _infer_stream(path_to_input_stream_endpoint, period_of_inference, prob_thres
             fps = 1 / elapse
 
             plt.text(0, 0, s=f'FPS = {fps:.1f}', color='r')
-            plt.show()
+            display.clear_output(wait=True)
+            display.display(plt.gcf())
+            time.sleep(1.0)
             #
             # if cv2.waitKey(10) == 27:
             #     break
