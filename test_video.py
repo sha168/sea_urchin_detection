@@ -13,10 +13,10 @@ from torchvision.transforms import transforms
 from config import NUM_CLASSES, PRETRAINED, DEVICE, RESIZE_TO, PERIOD, PROB_THRES, VIDEO
 from bbox import BBox
 
+import time
+from matplotlib import pyplot as plt
 from IPython.display import clear_output
-import matplotlib.pyplot as plt
-from numpy.random import randn
-from time import sleep
+from google.colab.patches import cv2_imshow
 
 def _infer_stream(path_to_input_stream_endpoint, period_of_inference, prob_thresh):
 
@@ -81,15 +81,17 @@ def _infer_stream(path_to_input_stream_endpoint, period_of_inference, prob_thres
                     #ax.add_patch(rect)
 
 
+            image = np.array(image)
+            frame = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+
             elapse = time.time() - timestamp
             fps = 1 / elapse
 
             plt.text(0, 0, s=f'FPS = {fps:.1f}', color='r')
 
-            plt.imshow(image)
-            plt.show()
-            sleep(1)
-            clear_output(wait=True)
+            clear_output()
+            cv2_imshow(frame)
+            time.sleep(20)
 
             #
             # if cv2.waitKey(10) == 27:
