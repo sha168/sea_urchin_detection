@@ -43,8 +43,8 @@ SAVE_PLOTS_EPOCH = 2  # save loss plots after these many epochs
 SAVE_MODEL_EPOCH = 50  # save model after these many epochs
 
 # Testing video
-PRETRAINED = 'MyDrive/sea_urchin_detection/uiqs_model.pth'
-VIDEO = 'MyDrive/sea_urchin_detection/videos/video_2023-02-20_resized.MP4'
+PRETRAINED = 'gdrive/MyDrive/sea_urchin_detection/uiqs_model.pth'
+VIDEO = 'gdrive/MyDrive/sea_urchin_detection/videos/video_2023-02-20_resized.MP4'
 OUTPUT = 'detected.MP4'
 PERIOD = 5
 PROB_THRES = 0.9
