@@ -2,7 +2,7 @@ import albumentations as A
 import cv2
 import numpy as np
 from albumentations.pytorch import ToTensorV2
-from config import DEVICE, CLASSES as classes
+from config import DEVICE
 import time
 import torch
 from collections import defaultdict, deque

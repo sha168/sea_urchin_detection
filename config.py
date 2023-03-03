@@ -41,3 +41,10 @@ COLORS = np.random.uniform(0, 255, size=(NUM_CLASSES, 3))
 # location to save model and plots
 SAVE_PLOTS_EPOCH = 2  # save loss plots after these many epochs
 SAVE_MODEL_EPOCH = 50  # save model after these many epochs
+
+# Testing video
+PRETRAINED = 'results_uiqs/model100.pth'
+VIDEO = 'videos/video_BYEDP190675_2023-02-20_123159_resized.MP4'
+OUTPUT = 'detected.MP4'
+PERIOD = 5
+PROB_THRES = 0.9
