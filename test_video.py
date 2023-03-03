@@ -33,7 +33,7 @@ def _infer_stream(path_to_input_stream_endpoint, period_of_inference, prob_thres
                 continue
 
             timestamp = time.time()
-            print(frame, flush=True)
+
             image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             image = Image.fromarray(image)
 
@@ -73,14 +73,15 @@ def _infer_stream(path_to_input_stream_endpoint, period_of_inference, prob_thres
             fps = 1 / elapse
             cv2.putText(frame, f'FPS = {fps:.1f}', (20, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 1, cv2.LINE_AA)
 
-            # cv2.imshow('easy-faster-rcnn.pytorch', frame)
-            # if cv2.waitKey(10) == 27:
-            #     break
-
-            out.write(frame)
-            c = cv2.waitKey(1)
-            if c & 0xFF == ord('q'):
+            cv2.imshow('easy-faster-rcnn.pytorch', frame)
+            if cv2.waitKey(10) == 27:
                 break
+
+            # out.write(frame)
+            # # cv2.imshow('easy-faster-rcnn.pytorch', frame)
+            # c = cv2.waitKey(1)
+            # if c & 0xFF == ord('q'):
+            #     break
 
     video_capture.release()
     out.release()

@@ -9,7 +9,7 @@ NUM_WORKERS = 4
 LR = 0.001
 WEIGHT_DECAY = 0.0005
 MOMENTUM = 0.9
-DATASET = 'AUDD'  # 'AUDD' or 'UIQS'
+DATASET = 'UIQS'  # 'AUDD' or 'UIQS'
 
 # whether to visualize images after crearing the data loaders
 VISUALIZE_TRANSFORMED_IMAGES = False
@@ -19,8 +19,8 @@ Path(OUT_DIR).mkdir(parents=True, exist_ok=True)
 
 DEVICE = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
-TRAIN_DIR = '/experiment/' + DATASET + '/train'
-VALID_DIR = '/experiment/' + DATASET + '/test'
+#TRAIN_DIR = '/experiment/' + DATASET + '/train'
+#VALID_DIR = '/experiment/' + DATASET + '/test'
 
 # TRAIN_DIR = '/Users/sha168/Downloads/' + DATASET + '/train'
 # VALID_DIR = '/Users/sha168/Downloads/' + DATASET + '/test'
@@ -43,8 +43,8 @@ SAVE_PLOTS_EPOCH = 2  # save loss plots after these many epochs
 SAVE_MODEL_EPOCH = 50  # save model after these many epochs
 
 # Testing video
-PRETRAINED = 'results_uiqs/model100.pth'
-VIDEO = 'videos/video_BYEDP190675_2023-02-20_123159_resized.MP4'
+PRETRAINED = 'MyDrive/sea_urchin_detection/uiqs_model.pth'
+VIDEO = 'MyDrive/sea_urchin_detection/videos/video_2023-02-20_resized.MP4'
 OUTPUT = 'detected.MP4'
 PERIOD = 5
 PROB_THRES = 0.9
