@@ -82,6 +82,7 @@ def _infer_stream(path_to_input_stream_endpoint, period_of_inference, prob_thres
 
             plt.text(0, 0, s=f'FPS = {fps:.1f}', color='r')
             display.clear_output(wait=True)
+            plt.show()
             display.display(plt.gcf())
             time.sleep(1.0)
             #
