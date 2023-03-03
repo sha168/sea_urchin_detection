@@ -4,7 +4,9 @@ import time
 import torch
 import cv2
 import numpy as np
-from PIL import ImageDraw, Image
+from PIL import Image
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
 from model import create_model
 from torchvision.transforms import transforms
 
@@ -55,27 +57,34 @@ def _infer_stream(path_to_input_stream_endpoint, period_of_inference, prob_thres
             detection_classes = detection_classes[kept_indices]
             detection_probs = detection_probs[kept_indices]
 
-            draw = ImageDraw.Draw(image)
+            fig, ax = plt.subplots()
 
             for bbox, cls, prob in zip(detection_bboxes.tolist(), detection_classes.tolist(), detection_probs.tolist()):
                 if cls == 1:  # only interested in urchins
                     color = random.choice(['red', 'green', 'blue', 'yellow', 'purple', 'white'])
-                    bbox = BBox(left=bbox[0], top=bbox[1], right=bbox[2], bottom=bbox[3])
+                    #bbox = BBox(left=bbox[0], top=bbox[1], right=bbox[2], bottom=bbox[3])
                     category = 'urchin'
 
-                    draw.rectangle(((bbox.left, bbox.top), (bbox.right, bbox.bottom)), outline=color)
-                    draw.text((bbox.left, bbox.top), text=f'{category:s} {prob:.3f}', fill=color)
+                    #draw.rectangle(((bbox.left, bbox.top), (bbox.right, bbox.bottom)), outline=color)
+                    #draw.text((bbox.left, bbox.top), text=f'{category:s} {prob:.3f}', fill=color)
 
-            image = np.array(image)
-            frame = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+                    rect = patches.Rectangle((bbox[0], bbox[1]), bbox[2]-bbox[0], bbox[3]-bbox[1], linewidth=1,
+                                             edgecolor=color, facecolor='none')
+                    ax.add_patch(rect)
+                    text = plt.text(bbox[2], bbox[3], s=f'{category:s} {prob:.3f}', color=color)
+
+                    # Add the patch to the Axes
+                    ax.add_patch(rect)
+
 
             elapse = time.time() - timestamp
             fps = 1 / elapse
-            cv2.putText(frame, f'FPS = {fps:.1f}', (20, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 1, cv2.LINE_AA)
 
-            cv2.imshow('easy-faster-rcnn.pytorch', frame)
-            if cv2.waitKey(10) == 27:
-                break
+            plt.text(0, 0, s=f'FPS = {fps:.1f}', color='r')
+            plt.show()
+            #
+            # if cv2.waitKey(10) == 27:
+            #     break
 
             # out.write(frame)
             # # cv2.imshow('easy-faster-rcnn.pytorch', frame)
