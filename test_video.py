@@ -13,6 +13,7 @@ from torchvision.transforms import transforms
 from config import NUM_CLASSES, PRETRAINED, DEVICE, RESIZE_TO, PERIOD, PROB_THRES, VIDEO
 from bbox import BBox
 from IPython import display
+from time import sleep
 
 def _infer_stream(path_to_input_stream_endpoint, period_of_inference, prob_thresh):
 
@@ -57,7 +58,6 @@ def _infer_stream(path_to_input_stream_endpoint, period_of_inference, prob_thres
             detection_classes = detection_classes[kept_indices]
             detection_probs = detection_probs[kept_indices]
 
-            display.clear_output(wait=True)
             fig, ax = plt.subplots()
 
             for bbox, cls, prob in zip(detection_bboxes.tolist(), detection_classes.tolist(), detection_probs.tolist()):
@@ -83,7 +83,10 @@ def _infer_stream(path_to_input_stream_endpoint, period_of_inference, prob_thres
 
             plt.text(0, 0, s=f'FPS = {fps:.1f}', color='r')
 
+            plt.imshow(image)
             plt.show()
+            sleep(1)
+            display.clear_output(wait=True)
 
             #
             # if cv2.waitKey(10) == 27:
