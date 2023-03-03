@@ -17,6 +17,7 @@ import time
 from matplotlib import pyplot as plt
 from IPython.display import clear_output
 from google.colab.patches import cv2_imshow
+from cv2 import imread
 
 def _infer_stream(path_to_input_stream_endpoint, period_of_inference, prob_thresh):
 
@@ -81,15 +82,16 @@ def _infer_stream(path_to_input_stream_endpoint, period_of_inference, prob_thres
                     #ax.add_patch(rect)
 
 
-            image = np.array(image)
-            frame = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+            fig = plt.imshow(image)
 
             elapse = time.time() - timestamp
             fps = 1 / elapse
 
-            plt.text(0, 0, s=f'FPS = {fps:.1f}', color='r')
+            #plt.text(0, 0, s=f'FPS = {fps:.1f}', color='r')
 
             clear_output()
+            fig.savefig('file.png', format='png')
+            img = imread('file.png')
             cv2_imshow(frame)
             time.sleep(20)
 
