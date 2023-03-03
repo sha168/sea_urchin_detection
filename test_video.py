@@ -33,7 +33,7 @@ def _infer_stream(path_to_input_stream_endpoint, period_of_inference, prob_thres
                 continue
 
             timestamp = time.time()
-
+            print(frame, flush=True)
             image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             image = Image.fromarray(image)
 
