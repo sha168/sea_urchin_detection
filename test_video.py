@@ -23,7 +23,7 @@ def _infer_stream(path_to_input_stream_endpoint, period_of_inference, prob_thres
     video_capture = cv2.VideoCapture(path_to_input_stream_endpoint)
 
     fourcc = cv2.VideoWriter_fourcc(*'MP4V')
-    out = cv2.VideoWriter('output.mp4', fourcc, 20.0)
+    out = cv2.VideoWriter('output.mp4', fourcc, 20.0, (512, 1024))
 
     with torch.no_grad():
         for sn in itertools.count(start=1):
