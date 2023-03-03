@@ -22,8 +22,8 @@ def _infer_stream(path_to_input_stream_endpoint, period_of_inference, prob_thres
         path_to_input_stream_endpoint = int(path_to_input_stream_endpoint)
     video_capture = cv2.VideoCapture(path_to_input_stream_endpoint)
 
-    fourcc = cv2.VideoWriter_fourcc(*'MP4V')
-    out = cv2.VideoWriter('output.mp4', fourcc, 20.0, (512, 1024))
+    #fourcc = cv2.VideoWriter_fourcc(*'MP4V')
+    #out = cv2.VideoWriter('output.mp4', fourcc, 20.0, (512, 1024))
 
     with torch.no_grad():
         for sn in itertools.count(start=1):
@@ -84,7 +84,7 @@ def _infer_stream(path_to_input_stream_endpoint, period_of_inference, prob_thres
             #     break
 
     video_capture.release()
-    out.release()
+    #out.release()
     cv2.destroyAllWindows()
 
 
