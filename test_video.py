@@ -12,7 +12,10 @@ from torchvision.transforms import transforms
 
 from config import NUM_CLASSES, PRETRAINED, DEVICE, RESIZE_TO, PERIOD, PROB_THRES, VIDEO
 from bbox import BBox
-from IPython import display
+
+from IPython.display import clear_output
+import matplotlib.pyplot as plt
+from numpy.random import randn
 from time import sleep
 
 def _infer_stream(path_to_input_stream_endpoint, period_of_inference, prob_thresh):
@@ -58,7 +61,7 @@ def _infer_stream(path_to_input_stream_endpoint, period_of_inference, prob_thres
             detection_classes = detection_classes[kept_indices]
             detection_probs = detection_probs[kept_indices]
 
-            fig, ax = plt.subplots()
+            #fig, ax = plt.subplots()
 
             for bbox, cls, prob in zip(detection_bboxes.tolist(), detection_classes.tolist(), detection_probs.tolist()):
                 if cls == 1:  # only interested in urchins
@@ -69,13 +72,13 @@ def _infer_stream(path_to_input_stream_endpoint, period_of_inference, prob_thres
                     #draw.rectangle(((bbox.left, bbox.top), (bbox.right, bbox.bottom)), outline=color)
                     #draw.text((bbox.left, bbox.top), text=f'{category:s} {prob:.3f}', fill=color)
 
-                    rect = patches.Rectangle((bbox[0], bbox[1]), bbox[2]-bbox[0], bbox[3]-bbox[1], linewidth=1,
-                                             edgecolor=color, facecolor='none')
-                    ax.add_patch(rect)
-                    plt.text(bbox[2], bbox[3], s=f'{category:s} {prob:.3f}', color=color)
+                    #rect = patches.Rectangle((bbox[0], bbox[1]), bbox[2]-bbox[0], bbox[3]-bbox[1], linewidth=1,
+                    #                         edgecolor=color, facecolor='none')
+                    #ax.add_patch(rect)
+                    #plt.text(bbox[2], bbox[3], s=f'{category:s} {prob:.3f}', color=color)
 
                     # Add the patch to the Axes
-                    ax.add_patch(rect)
+                    #ax.add_patch(rect)
 
 
             elapse = time.time() - timestamp
@@ -86,7 +89,7 @@ def _infer_stream(path_to_input_stream_endpoint, period_of_inference, prob_thres
             plt.imshow(image)
             plt.show()
             sleep(1)
-            display.clear_output(wait=True)
+            clear_output(wait=True)
 
             #
             # if cv2.waitKey(10) == 27:
