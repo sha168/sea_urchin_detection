@@ -16,8 +16,7 @@ from bbox import BBox
 import time
 from matplotlib import pyplot as plt
 from IPython.display import clear_output
-from google.colab.patches import cv2_imshow
-from cv2 import imread
+from time import sleep
 
 def _infer_stream(path_to_input_stream_endpoint, period_of_inference, prob_thresh):
 
@@ -62,7 +61,8 @@ def _infer_stream(path_to_input_stream_endpoint, period_of_inference, prob_thres
             detection_classes = detection_classes[kept_indices]
             detection_probs = detection_probs[kept_indices]
 
-            #fig, ax = plt.subplots()
+            fig, ax = plt.subplots()
+            ax.imshow(image)
 
             for bbox, cls, prob in zip(detection_bboxes.tolist(), detection_classes.tolist(), detection_probs.tolist()):
                 if cls == 1:  # only interested in urchins
@@ -73,27 +73,20 @@ def _infer_stream(path_to_input_stream_endpoint, period_of_inference, prob_thres
                     #draw.rectangle(((bbox.left, bbox.top), (bbox.right, bbox.bottom)), outline=color)
                     #draw.text((bbox.left, bbox.top), text=f'{category:s} {prob:.3f}', fill=color)
 
-                    #rect = patches.Rectangle((bbox[0], bbox[1]), bbox[2]-bbox[0], bbox[3]-bbox[1], linewidth=1,
-                    #                         edgecolor=color, facecolor='none')
-                    #ax.add_patch(rect)
-                    #plt.text(bbox[2], bbox[3], s=f'{category:s} {prob:.3f}', color=color)
+                    rect = patches.Rectangle((bbox[0], bbox[1]), bbox[2]-bbox[0], bbox[3]-bbox[1], linewidth=1,
+                                             edgecolor=color, facecolor='none')
+                    ax.add_patch(rect)
+                    plt.text(bbox[2], bbox[3], s=f'{category:s} {prob:.3f}', color=color)
 
-                    # Add the patch to the Axes
-                    #ax.add_patch(rect)
-
-
-            fig = plt.imshow(image)
 
             elapse = time.time() - timestamp
             fps = 1 / elapse
 
-            #plt.text(0, 0, s=f'FPS = {fps:.1f}', color='r')
-
+            plt.text(0, 0, s=f'FPS = {fps:.1f}', color='r')
             clear_output()
-            fig.savefig('file.png', format='png')
-            img = imread('file.png')
-            cv2_imshow(frame)
-            time.sleep(20)
+            plt.show()
+            sleep(1)
+
 
             #
             # if cv2.waitKey(10) == 27:
@@ -104,10 +97,6 @@ def _infer_stream(path_to_input_stream_endpoint, period_of_inference, prob_thres
             # c = cv2.waitKey(1)
             # if c & 0xFF == ord('q'):
             #     break
-
-    video_capture.release()
-    #out.release()
-    cv2.destroyAllWindows()
 
 
 if __name__ == '__main__':
