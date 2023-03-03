@@ -57,6 +57,7 @@ def _infer_stream(path_to_input_stream_endpoint, period_of_inference, prob_thres
             detection_classes = detection_classes[kept_indices]
             detection_probs = detection_probs[kept_indices]
 
+            display.clear_output(wait=True)
             fig, ax = plt.subplots()
 
             for bbox, cls, prob in zip(detection_bboxes.tolist(), detection_classes.tolist(), detection_probs.tolist()):
@@ -81,10 +82,9 @@ def _infer_stream(path_to_input_stream_endpoint, period_of_inference, prob_thres
             fps = 1 / elapse
 
             plt.text(0, 0, s=f'FPS = {fps:.1f}', color='r')
-            display.clear_output(wait=True)
+
             plt.show()
-            display.display(plt.gcf())
-            time.sleep(1.0)
+
             #
             # if cv2.waitKey(10) == 27:
             #     break
