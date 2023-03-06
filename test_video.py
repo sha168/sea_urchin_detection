@@ -59,7 +59,7 @@ def _infer_stream(path_to_input_stream_endpoint, path_to_output_stream_endpoint,
                     category = 'urchin'
 
                     print()
-                    masked_frame = cv2.rectangle(image=masked_frame, start_point=(bbox.left, bbox.top), end_point=(bbox.right, bbox.bottom), color=color, thickness=2)
+                    masked_frame = cv2.rectangle(img=masked_frame, start_point=(bbox.left, bbox.top), end_point=(bbox.right, bbox.bottom), color=color, thickness=2)
                     masked_frame = cv2.putText(
                         image=masked_frame, org=(bbox.left, bbox.top), text=f'{category:s} {prob:.3f}', font=cv2.FONT_HERSHEY_COMPLEX, font_scale=0.7, color=color, thickness=2
                     )
