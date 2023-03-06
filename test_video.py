@@ -56,7 +56,7 @@ def _infer_stream(path_to_input_stream_endpoint, path_to_output_stream_endpoint,
             # Check if the video writer is None
             if writer is None:
                 # Initialize our video writer
-                fourcc = cv2.VideoWriter_fourcc(*'MP4V')
+                fourcc = cv2.VideoWriter_fourcc(*'mp4v')
                 writer = cv2.VideoWriter(path_to_output_stream_endpoint, fourcc, 30,
                                          (masked_frame.shape[1], masked_frame.shape[0]), True)
 
