@@ -42,7 +42,7 @@ def _infer_stream(path_to_input_stream_endpoint, path_to_output_stream_endpoint,
             grabbed, frame = vs.read()
 
             if i_f % 100 == 0:
-                print('Processing frame ' + i_f, flush=True)
+                print('Processing frame # ' + str(i_f), flush=True)
             i_f += 1
 
             if i_f % period_of_inference != 0:
