@@ -56,8 +56,8 @@ def _infer_stream(path_to_input_stream_endpoint, path_to_output_stream_endpoint,
             # Check if the video writer is None
             if writer is None:
                 # Initialize our video writer
-                # fourcc = cv2.VideoWriter_fourcc(*"XVID")
-                writer = cv2.VideoWriter(path_to_output_stream_endpoint, 0x00000021, 30,
+                fourcc = cv2.VideoWriter_fourcc(*'MP4V')
+                writer = cv2.VideoWriter(path_to_output_stream_endpoint, fourcc, 30,
                                          (masked_frame.shape[1], masked_frame.shape[0]), True)
 
             # Write the output frame to disk
