@@ -1,13 +1,9 @@
-import itertools
-import random
-import time
 import torch
 import cv2
-from PIL import Image
 from model import create_model
 from torchvision.transforms import transforms
 import numpy as np
-from config import NUM_CLASSES, PRETRAINED, DEVICE, RESIZE_TO, PERIOD, PROB_THRES, VIDEO_IN, VIDEO_OUT
+from config import NUM_CLASSES, PRETRAINED, DEVICE, PERIOD, PROB_THRES, VIDEO_IN, VIDEO_OUT
 from bbox import BBox
 
 def _infer_stream(path_to_input_stream_endpoint, path_to_output_stream_endpoint, period_of_inference, prob_thresh):
@@ -32,7 +28,7 @@ def _infer_stream(path_to_input_stream_endpoint, path_to_output_stream_endpoint,
 
     # Initialize our video writer
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-    writer = cv2.VideoWriter(path_to_output_stream_endpoint, fourcc, 5,
+    writer = cv2.VideoWriter(path_to_output_stream_endpoint, fourcc, 2,
                              size, True)
 
     i_f = 0
