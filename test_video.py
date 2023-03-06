@@ -28,7 +28,7 @@ def _infer_stream(path_to_input_stream_endpoint, path_to_output_stream_endpoint,
 
     # Initialize our video writer
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-    writer = cv2.VideoWriter(path_to_output_stream_endpoint, fourcc, 2,
+    writer = cv2.VideoWriter(path_to_output_stream_endpoint, fourcc, 5,
                              size, True)
 
     i_f = 0
