@@ -45,6 +45,6 @@ SAVE_MODEL_EPOCH = 50  # save model after these many epochs
 # Testing video
 PRETRAINED = 'gdrive/MyDrive/sea_urchin_detection/uiqs_model.pth'
 VIDEO_IN = 'gdrive/MyDrive/sea_urchin_detection/videos/video_2023-02-20_resized.MP4'
-VIDEO_IN = 'detected.MP4'
+VIDEO_OUT = 'detected.MP4'
 PERIOD = 5
 PROB_THRES = 0.9
