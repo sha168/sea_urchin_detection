@@ -29,18 +29,12 @@ def _infer_stream(path_to_input_stream_endpoint, path_to_output_stream_endpoint,
             if sn % period_of_inference != 0:
                 continue
 
-            timestamp = time.time()
-            #image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            #image = Image.fromarray(image)
-
             image_tensor = transforms.ToTensor()(frame).to(DEVICE)
 
             predictions = model(image_tensor.unsqueeze(dim=0))
             detection_bboxes = predictions[0]['boxes']
             detection_classes = predictions[0]['labels']
             detection_probs = predictions[0]['scores']
-
-            # detection_bboxes /= scale
 
             kept_indices = detection_probs > prob_thresh
             detection_bboxes = detection_bboxes[kept_indices]
@@ -62,8 +56,8 @@ def _infer_stream(path_to_input_stream_endpoint, path_to_output_stream_endpoint,
             # Check if the video writer is None
             if writer is None:
                 # Initialize our video writer
-                fourcc = cv2.VideoWriter_fourcc(*"XVID")
-                writer = cv2.VideoWriter(path_to_output_stream_endpoint, fourcc, 30,
+                # fourcc = cv2.VideoWriter_fourcc(*"XVID")
+                writer = cv2.VideoWriter(path_to_output_stream_endpoint, 0x00000021, 30,
                                          (masked_frame.shape[1], masked_frame.shape[0]), True)
 
             # Write the output frame to disk
