@@ -18,10 +18,9 @@ def _infer_stream(path_to_input_stream_endpoint, path_to_output_stream_endpoint,
 
     # Initialize the video stream and pointer to output video file
     vs = cv2.VideoCapture(path_to_input_stream_endpoint)
-    writer = None
     vs.set(cv2.CAP_PROP_POS_FRAMES, 1000)
 
-    if (vs.isOpened() == False):
+    if vs.isOpened() == False:
         print("Error reading video file")
 
     # We need to set resolutions.
@@ -36,10 +35,18 @@ def _infer_stream(path_to_input_stream_endpoint, path_to_output_stream_endpoint,
     writer = cv2.VideoWriter(path_to_output_stream_endpoint, fourcc, 10,
                              size, True)
 
+    i_f = 0
     with torch.no_grad():
         while(True):
 
             grabbed, frame = vs.read()
+
+            if i_f % 100 == 0:
+                print('Processing frame ' + i_f, flush=True)
+            i_f += 1
+
+            if i_f % period_of_inference != 0:
+                continue
 
             if grabbed == True:
 
@@ -49,6 +56,8 @@ def _infer_stream(path_to_input_stream_endpoint, path_to_output_stream_endpoint,
                 detection_bboxes = predictions[0]['boxes']
                 detection_classes = predictions[0]['labels']
                 detection_probs = predictions[0]['scores']
+
+                print(detection_probs, flush=True)
 
                 kept_indices = detection_probs > prob_thresh
                 detection_bboxes = detection_bboxes[kept_indices]
@@ -76,14 +85,14 @@ def _infer_stream(path_to_input_stream_endpoint, path_to_output_stream_endpoint,
                 break
 
     # Release the file pointers
-    print("[INFO] cleaning up...")
+    print("[INFO] cleaning up...", flush=True)
     vs.release()
     writer.release()
 
     # Closes all the frames
     cv2.destroyAllWindows()
 
-    print("The video was successfully saved")
+    print("The video was successfully saved", flush=True)
 
 
 if __name__ == '__main__':
