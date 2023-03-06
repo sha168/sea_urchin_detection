@@ -3,35 +3,28 @@ import random
 import time
 import torch
 import cv2
-import numpy as np
-from PIL import ImageDraw, Image
+from PIL import Image
 from model import create_model
 from torchvision.transforms import transforms
 
-from config import NUM_CLASSES, PRETRAINED, DEVICE, RESIZE_TO, PERIOD, PROB_THRES, VIDEO
+from config import NUM_CLASSES, PRETRAINED, DEVICE, RESIZE_TO, PERIOD, PROB_THRES, VIDEO_IN, VIDEO_OUT
 from bbox import BBox
 
-
-def _infer_stream(path_to_input_stream_endpoint, period_of_inference, prob_thresh):
+def _infer_stream(path_to_input_stream_endpoint, path_to_output_stream_endpoint, period_of_inference, prob_thresh):
 
     model = create_model(num_classes=NUM_CLASSES, pretrained=PRETRAINED)
     model = model.to(DEVICE)
     model.eval()
 
-    if path_to_input_stream_endpoint.isdigit():
-        path_to_input_stream_endpoint = int(path_to_input_stream_endpoint)
-    video_capture = cv2.VideoCapture(path_to_input_stream_endpoint)
-
-    frame_width = int(video_capture.get(3))
-    frame_height = int(video_capture.get(4))
-    size = (frame_width, frame_height)
-
-    #Initialize video writer
-    result = cv2.VideoWriter('/mydrive/result.avi', cv2.VideoWriter_fourcc(*'MJPG'),15, size)
+    # Initialize the video stream and pointer to output video file
+    vs = cv2.VideoCapture(path_to_input_stream_endpoint)
+    writer = None
+    vs.set(cv2.CAP_PROP_POS_FRAMES, 1000);
 
     with torch.no_grad():
         for sn in itertools.count(start=1):
-            _, frame = video_capture.read()
+
+            (grabbed, frame) = vs.read()
 
             if sn % period_of_inference != 0:
                 continue
@@ -58,39 +51,38 @@ def _infer_stream(path_to_input_stream_endpoint, period_of_inference, prob_thres
             detection_classes = detection_classes[kept_indices]
             detection_probs = detection_probs[kept_indices]
 
-            draw = ImageDraw.Draw(image)
-
+            masked_frame = image_resized
             for bbox, cls, prob in zip(detection_bboxes.tolist(), detection_classes.tolist(), detection_probs.tolist()):
                 if cls == 1:  # only interested in urchins
                     color = random.choice(['red', 'green', 'blue', 'yellow', 'purple', 'white'])
                     bbox = BBox(left=bbox[0], top=bbox[1], right=bbox[2], bottom=bbox[3])
                     category = 'urchin'
 
-                    draw.rectangle(((bbox.left, bbox.top), (bbox.right, bbox.bottom)), outline=color)
-                    draw.text((bbox.left, bbox.top), text=f'{category:s} {prob:.3f}', fill=color)
+                    masked_frame = cv2.rectangle(masked_frame, (bbox.left, bbox.top), (bbox.right, bbox.bottom), color, 2)
+                    masked_frame = cv2.putText(
+                        masked_frame, (bbox.left, bbox.top), f'{category:s} {prob:.3f}', cv2.FONT_HERSHEY_COMPLEX, 0.7, color, 2
+                    )
 
-            image = np.array(image)
-            frame = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+            # Check if the video writer is None
+            if writer is None:
+                # Initialize our video writer
+                fourcc = cv2.VideoWriter_fourcc(*"XVID")
+                writer = cv2.VideoWriter(path_to_output_stream_endpoint, fourcc, 30,
+                                         (masked_frame.shape[1], masked_frame.shape[0]), True)
 
-            elapse = time.time() - timestamp
-            fps = 1 / elapse
-            cv2.putText(frame, f'FPS = {fps:.1f}', (20, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 1, cv2.LINE_AA)
+            # Write the output frame to disk
+            writer.write(masked_frame)
 
-            # cv2.imshow('easy-faster-rcnn.pytorch', frame)
-            # if cv2.waitKey(10) == 27:
-            #     break
-
-            result.write(frame)
-            c = cv2.waitKey(1)
-            if c & 0xFF == ord('q'):
-                break
-
-    video_capture.release()
+        # Release the file pointers
+        print("[INFO] cleaning up...")
+        writer.release()
 
 
 if __name__ == '__main__':
     def main():
 
-        _infer_stream(VIDEO, PERIOD, PROB_THRES)
+        _infer_stream(VIDEO_IN, VIDEO_OUT, PERIOD, PROB_THRES)
 
     main()
+
+
