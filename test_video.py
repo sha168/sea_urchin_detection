@@ -50,7 +50,7 @@ def _infer_stream(path_to_input_stream_endpoint, path_to_output_stream_endpoint,
 
                     masked_frame = cv2.rectangle(masked_frame, (int(bbox.left), int(bbox.top)), (int(bbox.right), int(bbox.bottom)), color, 2)
                     masked_frame = cv2.putText(
-                        masked_frame, (int(bbox.left), int(bbox.top)), f'{category:s} {prob:.3f}', cv2.FONT_HERSHEY_COMPLEX, 0.7, color, 2
+                        masked_frame, f'{category:s} {prob:.3f}', (int(bbox.left), int(bbox.top)), cv2.FONT_HERSHEY_COMPLEX, 0.7, color, 2
                     )
 
             # Check if the video writer is None
