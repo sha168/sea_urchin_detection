@@ -74,7 +74,9 @@ def _infer_stream(path_to_input_stream_endpoint, path_to_output_stream_endpoint,
                             masked_frame, f'{category:s} {prob:.3f}', (int(bbox.left), int(bbox.top)), cv2.FONT_HERSHEY_COMPLEX, 0.7, color, 2
                         )
 
-                print('Detected ' + str(len(bbox)) + ' sea urchins in frame # ' + str(i_f) + '!', flush=True)
+                if len(detection_bboxes.tolist()) > 0:
+                    print('Detected ' + str(len(detection_bboxes.tolist())) +
+                          ' sea urchins in frame # ' + str(i_f) + '!', flush=True)
 
                 # Write the output frame to disk
                 writer.write(masked_frame)
