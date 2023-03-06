@@ -54,7 +54,7 @@ def _infer_stream(path_to_input_stream_endpoint, path_to_output_stream_endpoint,
             masked_frame = image_resized
             for bbox, cls, prob in zip(detection_bboxes.tolist(), detection_classes.tolist(), detection_probs.tolist()):
                 if cls == 1:  # only interested in urchins
-                    color = (np.round(np.random.random(size=3) * 256).astype('int')
+                    color = (np.round(np.random.random(size=3) * 256).astype('int'))
                     bbox = BBox(left=bbox[0], top=bbox[1], right=bbox[2], bottom=bbox[3])
                     category = 'urchin'
 
