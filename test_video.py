@@ -18,7 +18,7 @@ def _infer_stream(path_to_input_stream_endpoint, path_to_output_stream_endpoint,
 
     # Initialize the video stream and pointer to output video file
     vs = cv2.VideoCapture(path_to_input_stream_endpoint)
-    vs.set(cv2.CAP_PROP_POS_FRAMES, 1000)
+    vs.set(cv2.CAP_PROP_POS_FRAMES, 7000)
 
     if vs.isOpened() == False:
         print("Error reading video file")
@@ -40,15 +40,12 @@ def _infer_stream(path_to_input_stream_endpoint, path_to_output_stream_endpoint,
         while(True):
 
             grabbed, frame = vs.read()
-
-            if i_f % 100 == 0:
-                print('Processing frame # ' + str(i_f), flush=True)
             i_f += 1
 
             if i_f % period_of_inference != 0:
                 continue
 
-            if grabbed == True:
+            if grabbed:
 
                 image_tensor = transforms.ToTensor()(frame).to(DEVICE)
 
@@ -63,20 +60,23 @@ def _infer_stream(path_to_input_stream_endpoint, path_to_output_stream_endpoint,
                 detection_probs = detection_probs[kept_indices]
 
                 masked_frame = frame
-                for bbox, cls, prob in zip(detection_bboxes.tolist(), detection_classes.tolist(), detection_probs.tolist()):
+                for bbox, cls, prob in zip(detection_bboxes.tolist(), detection_classes.tolist(),
+                                           detection_probs.tolist()):
                     if cls == 1:  # only interested in urchins
                         color = list(np.random.random(size=3) * 256)
                         bbox = BBox(left=bbox[0], top=bbox[1], right=bbox[2], bottom=bbox[3])
                         category = 'urchin'
 
-                        masked_frame = cv2.rectangle(masked_frame, (int(bbox.left), int(bbox.top)), (int(bbox.right), int(bbox.bottom)), color, 2)
+                        masked_frame = cv2.rectangle(masked_frame, (int(bbox.left), int(bbox.top)),
+                                                     (int(bbox.right), int(bbox.bottom)), color, 2)
                         masked_frame = cv2.putText(
-                            masked_frame, f'{category:s} {prob:.3f}', (int(bbox.left), int(bbox.top)), cv2.FONT_HERSHEY_COMPLEX, 0.7, color, 2
+                            masked_frame, f'{category:s} {prob:.3f}', (int(bbox.left), int(bbox.top)),
+                            cv2.FONT_HERSHEY_COMPLEX, 0.7, color, 2
                         )
 
                 if len(detection_bboxes.tolist()) > 0:
                     print('Detected ' + str(len(detection_bboxes.tolist())) +
-                          ' sea urchins in frame # ' + str(i_f) + '!', flush=True)
+                          ' sea urchin(s) in frame #' + str(i_f) + '!', flush=True)
 
                 # Write the output frame to disk
                 writer.write(masked_frame)
