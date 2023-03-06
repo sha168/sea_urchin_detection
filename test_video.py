@@ -30,14 +30,10 @@ def _infer_stream(path_to_input_stream_endpoint, path_to_output_stream_endpoint,
                 continue
 
             timestamp = time.time()
-            image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            image = Image.fromarray(image)
+            #image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            #image = Image.fromarray(image)
 
-            # scale = RESIZE_TO / min(image.height, image.width)
-
-            # image_resized = transforms.Resize((round(image.height * scale), round(image.width * scale)))(image)
-            image_resized = image
-            image_tensor = transforms.ToTensor()(image_resized).to(DEVICE)
+            image_tensor = transforms.ToTensor()(frame).to(DEVICE)
 
             predictions = model(image_tensor.unsqueeze(dim=0))
             detection_bboxes = predictions[0]['boxes']
@@ -51,7 +47,7 @@ def _infer_stream(path_to_input_stream_endpoint, path_to_output_stream_endpoint,
             detection_classes = detection_classes[kept_indices]
             detection_probs = detection_probs[kept_indices]
 
-            masked_frame = Image.fromarray(image_resized)
+            masked_frame = frame
             for bbox, cls, prob in zip(detection_bboxes.tolist(), detection_classes.tolist(), detection_probs.tolist()):
                 if cls == 1:  # only interested in urchins
                     color = list(np.random.random(size=3) * 256)
