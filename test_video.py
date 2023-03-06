@@ -32,7 +32,7 @@ def _infer_stream(path_to_input_stream_endpoint, path_to_output_stream_endpoint,
 
     # Initialize our video writer
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-    writer = cv2.VideoWriter(path_to_output_stream_endpoint, fourcc, 10,
+    writer = cv2.VideoWriter(path_to_output_stream_endpoint, fourcc, 5,
                              size, True)
 
     i_f = 0
@@ -57,8 +57,6 @@ def _infer_stream(path_to_input_stream_endpoint, path_to_output_stream_endpoint,
                 detection_classes = predictions[0]['labels']
                 detection_probs = predictions[0]['scores']
 
-                print(detection_probs, flush=True)
-
                 kept_indices = detection_probs > prob_thresh
                 detection_bboxes = detection_bboxes[kept_indices]
                 detection_classes = detection_classes[kept_indices]
@@ -76,6 +74,7 @@ def _infer_stream(path_to_input_stream_endpoint, path_to_output_stream_endpoint,
                             masked_frame, f'{category:s} {prob:.3f}', (int(bbox.left), int(bbox.top)), cv2.FONT_HERSHEY_COMPLEX, 0.7, color, 2
                         )
 
+                print('Detected ' + str(len(bbox)) + ' sea urchins in frame # ' + str(i_f) + '!', flush=True)
 
                 # Write the output frame to disk
                 writer.write(masked_frame)
@@ -85,14 +84,14 @@ def _infer_stream(path_to_input_stream_endpoint, path_to_output_stream_endpoint,
                 break
 
     # Release the file pointers
-    print("[INFO] cleaning up...", flush=True)
+    print("Cleaning up...", flush=True)
     vs.release()
     writer.release()
 
     # Closes all the frames
     cv2.destroyAllWindows()
 
-    print("The video was successfully saved", flush=True)
+    print("The video was successfully saved!", flush=True)
 
 
 if __name__ == '__main__':
