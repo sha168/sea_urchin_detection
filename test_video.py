@@ -48,16 +48,16 @@ def _infer_stream(path_to_input_stream_endpoint, path_to_output_stream_endpoint,
                     bbox = BBox(left=bbox[0], top=bbox[1], right=bbox[2], bottom=bbox[3])
                     category = 'urchin'
 
-                    masked_frame = cv2.rectangle(masked_frame, (bbox.left, bbox.top), (bbox.right, bbox.bottom), color, 2)
+                    masked_frame = cv2.rectangle(masked_frame, (int(bbox.left), int(bbox.top)), (int(bbox.right), int(bbox.bottom)), color, 2)
                     masked_frame = cv2.putText(
-                        masked_frame, (bbox.left, bbox.top), f'{category:s} {prob:.3f}', cv2.FONT_HERSHEY_COMPLEX, 0.7, color, 2
+                        masked_frame, (int(bbox.left), int(bbox.top)), f'{category:s} {prob:.3f}', cv2.FONT_HERSHEY_COMPLEX, 0.7, color, 2
                     )
 
             # Check if the video writer is None
             if writer is None:
                 # Initialize our video writer
                 fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-                writer = cv2.VideoWriter(path_to_output_stream_endpoint, fourcc, 30,
+                writer = cv2.VideoWriter(path_to_output_stream_endpoint, fourcc, 10,
                                          (masked_frame.shape[1], masked_frame.shape[0]), True)
 
             # Write the output frame to disk
