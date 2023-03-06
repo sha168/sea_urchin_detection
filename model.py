@@ -5,7 +5,10 @@ import torch.nn as nn
 
 def create_model(num_classes, pretrained=None):
     # load Faster RCNN pre-trained model
-    model = torchvision.models.detection.fasterrcnn_resnet50_fpn(weights='DEFAULT')
+    if pretrained == None:
+        model = torchvision.models.detection.fasterrcnn_resnet50_fpn(weights='DEFAULT')
+    else:
+        model = torchvision.models.detection.fasterrcnn_resnet50_fpn(weights=None)
 
     # get the number of input features
     in_features = model.roi_heads.box_predictor.cls_score.in_features
