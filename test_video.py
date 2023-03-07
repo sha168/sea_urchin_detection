@@ -60,6 +60,7 @@ def _infer_stream(path_to_input_stream_endpoint, path_to_output_stream_endpoint,
                                            detection_probs.tolist()):
                     if cls == 2:  # only interested in urchins
                         color = list(np.random.random(size=3) * 256)
+                        color = [256, 0, 0]
                         bbox = BBox(left=bbox[0], top=bbox[1], right=bbox[2], bottom=bbox[3])
                         category = 'urchin'
 
