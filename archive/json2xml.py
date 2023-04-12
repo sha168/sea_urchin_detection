@@ -165,7 +165,8 @@ def main(json_annotations_path, output_dir):
 
 if __name__ == '__main__':
     json_annotations_path = '/Users/sha168/Downloads/AUDD/annotations/instances_train.json'
-    output_dir = '/Users/sha168/Downloads/AUDD/xml/train'
+    json_annotations_path = '/Users/sha168/Downloads/export-2023-04-11T07_50_05.713Z.json'
+    output_dir = '/Users/sha168/Downloads/test_json2xml/xml/train'
     print('\nannotations_path=', json_annotations_path)
     print('output_dir=', output_dir, '\n')
     main(json_annotations_path, output_dir)
