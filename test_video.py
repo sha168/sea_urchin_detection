@@ -7,6 +7,7 @@ from sea_urchin_detection.config import NUM_CLASSES, PRETRAINED, DEVICE, PERIOD,
 from sea_urchin_detection.bbox import BBox
 
 def test_video(path_to_input_stream_endpoint, prob_thresh):
+    raise
     path_to_input_stream_endpoint = 'gdrive/MyDrive/sea_urchin_data/videos/' + path_to_input_stream_endpoint
     path_to_output_stream_endpoint = 'detected_pretrained.mp4'
     period_of_inference = 2

@@ -5,7 +5,7 @@ import torch.nn as nn
 
 def create_model(num_classes, pretrained=None):
     # load Faster RCNN pre-trained model
-    raise
+
     if pretrained == None:
         model = torchvision.models.detection.fasterrcnn_resnet50_fpn(weights='DEFAULT')
     else:
