@@ -149,7 +149,7 @@ def fine_tune(lr, epochs):
         show_tranformed_image(train_loader)
     # start the training epochs
     for epoch in range(epochs):
-        print(f"\nEPOCH {epoch + 1} of {NUM_EPOCHS}")
+        print(f"\nEPOCH {epoch + 1} of {epochs}")
         # reset the training and validation loss histories for the current epoch
         train_loss_hist.reset()
         val_loss_hist.reset()
@@ -189,9 +189,9 @@ def fine_tune(lr, epochs):
         print(f"Epoch #{epoch} validation precision: {val_precision_hist.value:.3f}")
         end = time.time()
         print(f"Took {((end - start) / 60):.3f} minutes for epoch {epoch}")
-        if (epoch + 1) % SAVE_MODEL_EPOCH == 0:  # save model after every n epochs
-            torch.save(model.state_dict(), f"{OUT_DIR}/model{epoch + 1}.pth")
-            print('SAVING MODEL COMPLETE...\n')
+        # if (epoch + 1) % SAVE_MODEL_EPOCH == 0:  # save model after every n epochs
+        #     torch.save(model.state_dict(), f"{OUT_DIR}/model{epoch + 1}.pth")
+        #     print('SAVING MODEL COMPLETE...\n')
 
         if (epoch + 1) % SAVE_PLOTS_EPOCH == 0:  # save loss plots after n epochs
             train_ax.plot(train_loss, color='blue', label='train')
@@ -231,6 +231,6 @@ def fine_tune(lr, epochs):
             valid_ax2.legend(loc='lower right')
             figure_1.savefig(f"{OUT_DIR}/loss_{epoch + 1}.png")
             figure_2.savefig(f"{OUT_DIR}/precision_{epoch + 1}.png")
-            torch.save(model.state_dict(), f"{OUT_DIR}/model{epoch + 1}.pth")
+            torch.save(model.state_dict(), f"{OUT_DIR}/model.pth")
 
         plt.close('all')
