@@ -2,16 +2,16 @@ import albumentations as A
 import cv2
 import numpy as np
 from albumentations.pytorch import ToTensorV2
-from config import DEVICE
+from sea_urchin_detection.config import DEVICE
 import time
 import torch
 from collections import defaultdict, deque
 import datetime
 import torch.distributed as dist
 import torchvision
-from coco_eval import CocoEvaluator
-from coco_utils import get_coco_api_from_dataset
-from config import COLORS, OUT_DIR
+from sea_urchin_detection.coco_eval import CocoEvaluator
+from sea_urchin_detection.coco_utils import get_coco_api_from_dataset
+from sea_urchin_detection.config import COLORS, OUT_DIR
 
 # this class keeps track of the training and validation loss values...
 # ... and helps to get the average for each epoch as well
