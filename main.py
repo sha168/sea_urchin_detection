@@ -1,15 +1,15 @@
-from config import DEVICE, NUM_CLASSES, NUM_EPOCHS, OUT_DIR
-from config import VISUALIZE_TRANSFORMED_IMAGES
-from config import SAVE_PLOTS_EPOCH, SAVE_MODEL_EPOCH
-from config import LR, WEIGHT_DECAY, MOMENTUM
-from model import create_model
-from utils import Averager
+from sea_urchin_detection.config import DEVICE, NUM_CLASSES, NUM_EPOCHS, OUT_DIR
+from sea_urchin_detection.config import VISUALIZE_TRANSFORMED_IMAGES
+from sea_urchin_detection.config import SAVE_PLOTS_EPOCH, SAVE_MODEL_EPOCH
+from sea_urchin_detection.config import LR, WEIGHT_DECAY, MOMENTUM
+from sea_urchin_detection.model import create_model
+from sea_urchin_detection.utils import Averager
 from tqdm.auto import tqdm
-from datasets import train_loader, valid_loader
+from sea_urchin_detection.datasets import train_loader, valid_loader
 import torch
 import matplotlib.pyplot as plt
 import time
-from utils import evaluate, draw_boxes
+from sea_urchin_detection.utils import evaluate, draw_boxes
 plt.style.use('ggplot')
 
 

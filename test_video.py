@@ -1,16 +1,15 @@
 import torch
 import cv2
-from model import create_model
+from sea_urchin_detection.model import create_model
 from torchvision.transforms import transforms
 import numpy as np
-from config import NUM_CLASSES, PRETRAINED, DEVICE, PERIOD, PROB_THRES, VIDEO_IN, VIDEO_OUT
+from sea_urchin_detection.config import NUM_CLASSES, PRETRAINED, DEVICE, PERIOD, PROB_THRES, VIDEO_IN, VIDEO_OUT
 from bbox import BBox
 
 def test_video(path_to_input_stream_endpoint, prob_thresh):
-
-    period_of_inference = 2
     path_to_input_stream_endpoint = 'gdrive/MyDrive/sea_urchin_data/videos/' + path_to_input_stream_endpoint
     path_to_output_stream_endpoint = 'detected_pretrained.mp4'
+    period_of_inference = 2
 
     model = create_model(num_classes=NUM_CLASSES, pretrained=PRETRAINED)
     model = model.to(DEVICE)
@@ -18,7 +17,7 @@ def test_video(path_to_input_stream_endpoint, prob_thresh):
 
     # Initialize the video stream and pointer to output video file
     vs = cv2.VideoCapture(path_to_input_stream_endpoint)
-    # vs.set(cv2.CAP_PROP_POS_FRAMES, 7000)
+    vs.set(cv2.CAP_PROP_POS_FRAMES, 7000)
 
     if vs.isOpened() == False:
         print("Error reading video file")

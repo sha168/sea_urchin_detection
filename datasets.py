@@ -4,9 +4,9 @@ import numpy as np
 import os
 import glob as glob
 from xml.etree import ElementTree as et
-from config import CLASSES, RESIZE_TO, TRAIN_DIR, VALID_DIR, BATCH_SIZE, NUM_WORKERS
+from sea_urchin_detection.config import CLASSES, RESIZE_TO, TRAIN_DIR, VALID_DIR, BATCH_SIZE, NUM_WORKERS
 from torch.utils.data import Dataset, DataLoader
-from utils import collate_fn, get_train_transform, get_valid_transform
+from sea_urchin_detection.utils import collate_fn, get_train_transform, get_valid_transform
 
 
 # the dataset class
