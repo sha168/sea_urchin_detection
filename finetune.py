@@ -167,7 +167,7 @@ def fine_tune():
         val_loss = validate(valid_loader, model, val_loss_hist)
         train_evaluator = evaluate(model, train_loader, DEVICE)
         val_evaluator = evaluate(model, valid_loader, DEVICE)
-
+        raise
         train_stats = train_evaluator.coco_eval['bbox'].stats.__array__()
         val_stats = val_evaluator.coco_eval['bbox'].stats.__array__()
 
