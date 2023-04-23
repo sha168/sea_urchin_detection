@@ -6,7 +6,11 @@ import numpy as np
 from config import NUM_CLASSES, PRETRAINED, DEVICE, PERIOD, PROB_THRES, VIDEO_IN, VIDEO_OUT
 from bbox import BBox
 
-def _infer_stream(path_to_input_stream_endpoint, path_to_output_stream_endpoint, period_of_inference, prob_thresh):
+def test_video(path_to_input_stream_endpoint, prob_thresh):
+
+    period_of_inference = 2
+    path_to_input_stream_endpoint = 'gdrive/MyDrive/sea_urchin_data/videos/' + path_to_input_stream_endpoint
+    path_to_output_stream_endpoint = 'detected_pretrained.mp4'
 
     model = create_model(num_classes=NUM_CLASSES, pretrained=PRETRAINED)
     model = model.to(DEVICE)
@@ -14,7 +18,7 @@ def _infer_stream(path_to_input_stream_endpoint, path_to_output_stream_endpoint,
 
     # Initialize the video stream and pointer to output video file
     vs = cv2.VideoCapture(path_to_input_stream_endpoint)
-    vs.set(cv2.CAP_PROP_POS_FRAMES, 7000)
+    # vs.set(cv2.CAP_PROP_POS_FRAMES, 7000)
 
     if vs.isOpened() == False:
         print("Error reading video file")
@@ -96,7 +100,7 @@ def _infer_stream(path_to_input_stream_endpoint, path_to_output_stream_endpoint,
 if __name__ == '__main__':
     def main():
 
-        _infer_stream(VIDEO_IN, VIDEO_OUT, PERIOD, PROB_THRES)
+        test_video(VIDEO_IN, PROB_THRES)
 
     main()
 
