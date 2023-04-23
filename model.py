@@ -15,7 +15,6 @@ def create_model(num_classes, pretrained=None):
     in_features = model.roi_heads.box_predictor.cls_score.in_features
     # define a new head for the detector with required number of classes
     model.roi_heads.box_predictor = FastRCNNPredictor(in_features, num_classes)
-    print(num_classes, flush=True)
 
     if pretrained != None:
         model.load_state_dict(torch.load(pretrained, map_location="cpu"))

@@ -18,7 +18,7 @@ def test_video(path_to_input_stream_endpoint, prob_thresh):
 
     # Initialize the video stream and pointer to output video file
     vs = cv2.VideoCapture(path_to_input_stream_endpoint)
-    vs.set(cv2.CAP_PROP_POS_FRAMES, 7000)
+    # vs.set(cv2.CAP_PROP_POS_FRAMES, 7000)
 
     if vs.isOpened() == False:
         print("Error reading video file")
