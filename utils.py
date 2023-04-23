@@ -289,14 +289,14 @@ def evaluate(model, data_loader, device):
     torch.set_num_threads(1)
     cpu_device = torch.device("cpu")
     model.eval()
-    metric_logger = MetricLogger(delimiter="  ")
-    header = "Test:"
+    ##metric_logger = MetricLogger(delimiter="  ")
+    #header = "Test:"
 
     coco = get_coco_api_from_dataset(data_loader.dataset)
     iou_types = _get_iou_types(model)
     coco_evaluator = CocoEvaluator(coco, iou_types)
 
-    for images, targets in metric_logger.log_every(data_loader, 100, header):
+    for images, targets in data_loader:
         images = list(img.to(device) for img in images)
 
         if torch.cuda.is_available():
