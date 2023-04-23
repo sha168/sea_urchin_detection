@@ -14,12 +14,14 @@ import torchvision
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 plt.style.use('ggplot')
 
+val_itr = 1
+val_loss_list = []
+train_itr = 1
+train_loss_list = []
 
 # function for running training iterations
 def train(train_data_loader, model, optimizer, train_loss_hist):
     print('Training')
-    global train_itr
-    global train_loss_list
 
     # initialize tqdm progress bar
     prog_bar = tqdm(train_data_loader, total=len(train_data_loader))
@@ -48,8 +50,6 @@ def train(train_data_loader, model, optimizer, train_loss_hist):
 # function for running validation iterations
 def validate(valid_data_loader, model, val_loss_hist):
     print('Validating')
-    global val_itr
-    global val_loss_list
 
     # initialize tqdm progress bar
     prog_bar = tqdm(valid_data_loader, total=len(valid_data_loader))
@@ -75,8 +75,6 @@ def validate(valid_data_loader, model, val_loss_hist):
 
 def predict(data_loader, model):
     print('Validating')
-    global val_itr
-    global val_loss_list
 
     # initialize tqdm progress bar
     prog_bar = tqdm(data_loader, total=len(data_loader))
@@ -130,12 +128,10 @@ def fine_tune():
     val_precision_hist = Averager()
     train_recall_hist = Averager()
     val_recall_hist = Averager()
-    train_itr = 1
-    val_itr = 1
+
     # train and validation loss lists to store loss values of all...
     # ... iterations till ena and plot graphs for all iterations
-    train_loss_list = []
-    val_loss_list = []
+
     train_precision_list = []
     val_precision_list = []
     train_recall_list = []
