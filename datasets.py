@@ -70,6 +70,8 @@ class SeaUrchinDataset(Dataset):
             ymin_final = (ymin / image_height) * self.height
             yamx_final = (ymax / image_height) * self.height
 
+            print(xmin_final, ymin_final, xmax_final, yamx_final, flush=True)
+
             boxes.append([xmin_final, ymin_final, xmax_final, yamx_final])
 
         # bounding box to tensor
