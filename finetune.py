@@ -21,6 +21,8 @@ train_loss_list = []
 
 # function for running training iterations
 def train(train_data_loader, model, optimizer, train_loss_hist):
+    global train_itr
+    global train_loss_list
     print('Training')
 
     # initialize tqdm progress bar
@@ -50,6 +52,8 @@ def train(train_data_loader, model, optimizer, train_loss_hist):
 # function for running validation iterations
 def validate(valid_data_loader, model, val_loss_hist):
     print('Validating')
+    global val_itr
+    global val_loss_list
 
     # initialize tqdm progress bar
     prog_bar = tqdm(valid_data_loader, total=len(valid_data_loader))
