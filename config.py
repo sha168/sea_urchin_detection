@@ -47,8 +47,8 @@ NUM_CLASSES = len(CLASSES)
 COLORS = np.random.uniform(0, 255, size=(NUM_CLASSES, 3))
 
 # location to save model and plots
-SAVE_PLOTS_EPOCH = 1  # save loss plots after these many epochs
-SAVE_MODEL_EPOCH = 1  # save model after these many epochs
+SAVE_PLOTS_EPOCH = 20  # save loss plots after these many epochs
+SAVE_MODEL_EPOCH = 20  # save model after these many epochs
 
 # Testing video
 PRETRAINED = 'gdrive/MyDrive/sea_urchin_data/pretrained_models/audd_model10.pth'
