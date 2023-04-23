@@ -126,7 +126,7 @@ def fine_tune(lr, epochs, prob_thresh):
 
     model = model.to(DEVICE)
     # get the model parameters
-    params = [p for p in model.roi_heads.box_predictor.parameters() if p.requires_grad]
+    params = [p for p in model.parameters() if p.requires_grad]
     # define the optimizer
     optimizer = torch.optim.SGD(params, lr=lr, momentum=MOMENTUM, weight_decay=WEIGHT_DECAY)
     # and a learning rate scheduler
@@ -154,7 +154,7 @@ def fine_tune(lr, epochs, prob_thresh):
 
         show_tranformed_image(train_loader)
     # start the training epochs
-    for epoch in range(epochs):
+    for epoch in range(1, epochs):
         print(f"\nEPOCH {epoch + 1} of {epochs}")
         # reset the training and validation loss histories for the current epoch
         train_loss_hist.reset()
