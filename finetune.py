@@ -26,7 +26,7 @@ def train(train_data_loader, model, optimizer, train_loss_hist):
     print('Training')
 
     # initialize tqdm progress bar
-    prog_bar = tqdm(train_data_loader, total=len(train_data_loader))
+    prog_bar = tqdm(train_data_loader, total=10*len(train_data_loader))
 
     model.train()
     for i, data in enumerate(prog_bar):
