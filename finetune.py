@@ -81,10 +81,10 @@ def predict(data_loader, model):
     print('Validating')
 
     # initialize tqdm progress bar
-    prog_bar = tqdm(data_loader, total=len(data_loader))
+    #prog_bar = tqdm(data_loader, total=len(data_loader))
 
     model.eval()
-    for i, data in enumerate(prog_bar):
+    for i, data in enumerate(data_loader):
         images, targets = data
 
         images = list(image.to(DEVICE) for image in images)
