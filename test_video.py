@@ -4,7 +4,7 @@ from sea_urchin_detection.model import create_model
 from torchvision.transforms import transforms
 import numpy as np
 from sea_urchin_detection.config import NUM_CLASSES, PRETRAINED, DEVICE, PERIOD, PROB_THRES, VIDEO_IN, VIDEO_OUT
-from bbox import BBox
+from sea_urchin_detection.bbox import BBox
 
 def test_video(path_to_input_stream_endpoint, prob_thresh):
     path_to_input_stream_endpoint = 'gdrive/MyDrive/sea_urchin_data/videos/' + path_to_input_stream_endpoint
