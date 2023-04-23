@@ -88,7 +88,10 @@ def predict(data_loader, model):
         images = list(image.to(DEVICE) for image in images)
 
         with torch.no_grad():
-            predictions = model(images)
+            try:
+                predictions = model(images)
+            except:
+                print(' empty frame')
 
         break
 

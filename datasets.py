@@ -76,12 +76,6 @@ class SeaUrchinDataset(Dataset):
         boxes = torch.as_tensor(boxes, dtype=torch.float32)
         # area of the bounding boxes
 
-        try:
-            t=boxes[:, 3]
-        except:
-            print(boxes.shape, flush=True)
-            print(boxes, flush=True)
-
         area = (boxes[:, 3] - boxes[:, 1]) * (boxes[:, 2] - boxes[:, 0])
         # no crowd instances
         iscrowd = torch.zeros((boxes.shape[0],), dtype=torch.int64)
