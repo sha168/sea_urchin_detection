@@ -104,7 +104,7 @@ def predict(data_loader, model):
         draw_boxes(boxes_, labels_, image_, i)
 
 
-def fine_tune():
+def fine_tune(lr, epochs):
 
     # initialize the model and move to the computation device
     model = torchvision.models.detection.fasterrcnn_resnet50_fpn(weights=None)
@@ -122,7 +122,7 @@ def fine_tune():
     # get the model parameters
     params = [p for p in model.parameters() if p.requires_grad]
     # define the optimizer
-    optimizer = torch.optim.SGD(params, lr=LR, momentum=MOMENTUM, weight_decay=WEIGHT_DECAY)
+    optimizer = torch.optim.SGD(params, lr=lr, momentum=MOMENTUM, weight_decay=WEIGHT_DECAY)
     # and a learning rate scheduler
     lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=30, gamma=0.1)
     # initialize the Averager class
@@ -148,7 +148,7 @@ def fine_tune():
 
         show_tranformed_image(train_loader)
     # start the training epochs
-    for epoch in range(NUM_EPOCHS):
+    for epoch in range(epochs):
         print(f"\nEPOCH {epoch + 1} of {NUM_EPOCHS}")
         # reset the training and validation loss histories for the current epoch
         train_loss_hist.reset()
@@ -180,8 +180,8 @@ def fine_tune():
         val_recall_list.append(val_stats[8])
         val_recall_hist.send(val_stats[8])
 
-        if (epoch + 1) % SAVE_PLOTS_EPOCH == 0:
-            predict(valid_loader, model)
+        # if (epoch + 1) % SAVE_PLOTS_EPOCH == 0:
+        #     predict(valid_loader, model)
 
         # update the learning rate
         lr_scheduler.step()
