@@ -16,7 +16,7 @@ plt.style.use('ggplot')
 
 
 # function for running training iterations
-def train(train_data_loader, model):
+def train(train_data_loader, model, optimizer, train_loss_hist):
     print('Training')
     global train_itr
     global train_loss_list
@@ -46,7 +46,7 @@ def train(train_data_loader, model):
 
 
 # function for running validation iterations
-def validate(valid_data_loader, model):
+def validate(valid_data_loader, model, val_loss_hist):
     print('Validating')
     global val_itr
     global val_loss_list
@@ -88,10 +88,8 @@ def predict(data_loader, model):
         images = list(image.to(DEVICE) for image in images)
 
         with torch.no_grad():
-            try:
-                predictions = model(images)
-            except:
-                print(' empty frame')
+            predictions = model(images)
+
 
         break
 
@@ -102,9 +100,6 @@ def predict(data_loader, model):
         image_ = image.permute(1, 2, 0).cpu().numpy()
 
         draw_boxes(boxes_, labels_, image_, i)
-
-
-
 
 
 def fine_tune():
@@ -168,8 +163,8 @@ def fine_tune():
         # start timer and carry out training and validation
         start = time.time()
         predict(valid_loader, model)
-        train_loss = train(train_loader, model)
-        val_loss = validate(valid_loader, model)
+        train_loss = train(train_loader, model, optimizer, train_loss_hist)
+        val_loss = validate(valid_loader, model, val_loss_hist)
         train_evaluator = evaluate(model, train_loader, DEVICE)
         val_evaluator = evaluate(model, valid_loader, DEVICE)
 
