@@ -9,7 +9,7 @@ NUM_WORKERS = 4
 LR = 0.001
 WEIGHT_DECAY = 0.0005
 MOMENTUM = 0.9
-DATASET = 'AUDD'  # 'AUDD' or 'UIQS'
+DATASET = 'TROMSO'  # 'AUDD' or 'UIQS'
 
 # whether to visualize images after crearing the data loaders
 VISUALIZE_TRANSFORMED_IMAGES = False
@@ -39,9 +39,10 @@ elif DATASET == 'AUDD':
     ]
 elif DATASET == 'TROMSO':
     CLASSES = [
-        'background', 'empty1', 'urchin', 'empty2'
+        'background', 'urchin'
     ]
 
+NUM_CLASSES_PT = 4
 NUM_CLASSES = len(CLASSES)
 COLORS = np.random.uniform(0, 255, size=(NUM_CLASSES, 3))
 
