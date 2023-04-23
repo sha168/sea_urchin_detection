@@ -77,7 +77,7 @@ def validate(valid_data_loader, model, val_loss_hist):
     return val_loss_list
 
 
-def predict(data_loader, model):
+def predict(data_loader, model, prob_thresh):
     print('Validating')
 
     # initialize tqdm progress bar
@@ -99,12 +99,18 @@ def predict(data_loader, model):
         prediction = predictions[i]
         boxes_ = prediction['boxes'].cpu().numpy()
         labels_ = prediction['labels'].cpu().numpy()
+        probs_ = predictions['scores'].cpu().numpy()
+
+        kept_indices = probs_ > prob_thresh
+        boxes_ = boxes_[kept_indices]
+        labels_ = labels_[kept_indices]
+
         image_ = image.permute(1, 2, 0).cpu().numpy()
 
         draw_boxes(boxes_, labels_, image_, i)
 
 
-def fine_tune(lr, epochs):
+def fine_tune(lr, epochs, prob_thresh):
 
     # initialize the model and move to the computation device
     model = torchvision.models.detection.fasterrcnn_resnet50_fpn(weights=None)
@@ -180,8 +186,8 @@ def fine_tune(lr, epochs):
         val_recall_list.append(val_stats[8])
         val_recall_hist.send(val_stats[8])
 
-        # if (epoch + 1) % SAVE_PLOTS_EPOCH == 0:
-        #     predict(valid_loader, model)
+        if (epoch + 1) % SAVE_PLOTS_EPOCH == 0:
+            predict(valid_loader, model, prob_thresh)
 
         # update the learning rate
         lr_scheduler.step()
