@@ -4,7 +4,7 @@ import numpy as np
 
 BATCH_SIZE = 5  # increase / decrease according to GPU memeory
 RESIZE_TO = 512  # 512  # resize the image for training and transforms
-NUM_EPOCHS = 3  # number of epochs to train for
+NUM_EPOCHS = 100  # number of epochs to train for
 NUM_WORKERS = 2
 LR = 0.001
 WEIGHT_DECAY = 0.0005
@@ -19,11 +19,11 @@ Path(OUT_DIR).mkdir(parents=True, exist_ok=True)
 
 DEVICE = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
-# TRAIN_DIR = '/experiment/' + DATASET + '/train'
-# VALID_DIR = '/experiment/' + DATASET + '/test'
+TRAIN_DIR = '/experiment/' + DATASET + '/train'
+VALID_DIR = '/experiment/' + DATASET + '/test'
 
-TRAIN_DIR = 'gdrive/MyDrive/sea_urchin_data/' + DATASET + '/train'
-VALID_DIR = 'gdrive/MyDrive/sea_urchin_data/' + DATASET + '/test'
+#TRAIN_DIR = 'gdrive/MyDrive/sea_urchin_data/' + DATASET + '/train'
+#VALID_DIR = 'gdrive/MyDrive/sea_urchin_data/' + DATASET + '/test'
 
 # TRAIN_DIR = '/Users/sha168/Downloads/' + DATASET + '/train'
 # VALID_DIR = '/Users/sha168/Downloads/' + DATASET + '/test'
