@@ -1,9 +1,9 @@
 import torch
 import cv2
+raise
 from sea_urchin_detection.model import create_model
 from torchvision.transforms import transforms
 import numpy as np
-raise
 from sea_urchin_detection.config import NUM_CLASSES, PRETRAINED, DEVICE, PERIOD, PROB_THRES, VIDEO_IN, VIDEO_OUT
 from sea_urchin_detection.bbox import BBox
 
