@@ -65,10 +65,10 @@ class SeaUrchinDataset(Dataset):
 
             # resize the bounding boxes according to the...
             # ... desired `width`, `height`
-            xmin_final = (xmin / image_width) * self.width
-            xmax_final = (xmax / image_width) * self.width
-            ymin_final = (ymin / image_height) * self.height
-            yamx_final = (ymax / image_height) * self.height
+            xmin_final = torch.clip(xmin / image_width, 0, 1) * self.width
+            xmax_final = torch.clip(xmax / image_width, 0, 1) * self.width
+            ymin_final = torch.clip(ymin / image_height, 0, 1) * self.height
+            yamx_final = torch.clip(ymax / image_height, 0, 1) * self.height
 
             #print(xmin_final, ymin_final, xmax_final, yamx_final, flush=True)
 
