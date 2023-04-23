@@ -99,7 +99,7 @@ def predict(data_loader, model, prob_thresh):
         prediction = predictions[i]
         boxes_ = prediction['boxes'].cpu().numpy()
         labels_ = prediction['labels'].cpu().numpy()
-        probs_ = predictions['scores'].cpu().numpy()
+        probs_ = prediction['scores'].cpu().numpy()
 
         kept_indices = probs_ > prob_thresh
         boxes_ = boxes_[kept_indices]
