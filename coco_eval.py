@@ -7,7 +7,7 @@ import pycocotools.mask as mask_util
 import torch
 import sea_urchin_detection.utils as utils
 from pycocotools.coco import COCO
-import sea_urchin_detection.COCOeval as COCOeval
+from sea_urchin_detection.COCOeval import COCOeval
 
 
 class CocoEvaluator:
