@@ -1,6 +1,5 @@
 import torch
 import cv2
-raise
 from sea_urchin_detection.model import create_model
 from torchvision.transforms import transforms
 import numpy as np
