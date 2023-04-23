@@ -39,7 +39,7 @@ elif DATASET == 'AUDD':
     ]
 elif DATASET == 'TROMSO':
     CLASSES = [
-        'background', 'urchin'
+        'background', 'empty1', 'urchin', 'empty2'
     ]
 
 NUM_CLASSES_PT = 4

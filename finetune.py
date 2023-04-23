@@ -122,7 +122,7 @@ def fine_tune(lr, epochs, prob_thresh):
     if PRETRAINED != None:
         model.load_state_dict(torch.load(PRETRAINED, map_location="cpu"))
 
-    model.roi_heads.box_predictor = FastRCNNPredictor(in_features, NUM_CLASSES)
+    # model.roi_heads.box_predictor = FastRCNNPredictor(in_features, NUM_CLASSES)
 
     model = model.to(DEVICE)
     # get the model parameters
