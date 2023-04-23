@@ -126,7 +126,7 @@ def fine_tune(lr, epochs, prob_thresh):
 
     model = model.to(DEVICE)
     # get the model parameters
-    params = [p for p in model.parameters() if p.requires_grad]
+    params = [p for p in model.roi_heads.box_predictor.parameters() if p.requires_grad]
     # define the optimizer
     optimizer = torch.optim.SGD(params, lr=lr, momentum=MOMENTUM, weight_decay=WEIGHT_DECAY)
     # and a learning rate scheduler
