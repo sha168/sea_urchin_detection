@@ -154,7 +154,7 @@ def fine_tune(lr, epochs, prob_thresh):
 
         show_tranformed_image(train_loader)
     # start the training epochs
-    for epoch in range(1, epochs):
+    for epoch in range(epochs):
         print(f"\nEPOCH {epoch + 1} of {epochs}")
         # reset the training and validation loss histories for the current epoch
         train_loss_hist.reset()
