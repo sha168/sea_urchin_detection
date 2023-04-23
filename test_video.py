@@ -11,7 +11,7 @@ def test_video(path_to_input_stream_endpoint, prob_thresh):
     path_to_output_stream_endpoint = 'detected_pretrained.mp4'
     period_of_inference = 2
 
-    model = create_model(num_classes=NUM_CLASSES, pretrained=PRETRAINED)
+    model = create_model(num_classes=2, pretrained=PRETRAINED) # NUM_CLASSES
     model = model.to(DEVICE)
     model.eval()
 
