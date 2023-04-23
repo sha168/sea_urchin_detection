@@ -4,7 +4,7 @@ from sea_urchin_detection.config import SAVE_PLOTS_EPOCH, SAVE_MODEL_EPOCH
 from sea_urchin_detection.config import LR, WEIGHT_DECAY, MOMENTUM, PRETRAINED
 from sea_urchin_detection.model import create_model
 from sea_urchin_detection.utils import Averager
-from tqdm.auto import tqdm
+from tqdm import tqdm
 from sea_urchin_detection.datasets import train_loader, valid_loader
 import torch
 import matplotlib.pyplot as plt
