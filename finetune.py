@@ -162,7 +162,7 @@ def fine_tune():
         figure_2, valid_ax = plt.subplots()
         # start timer and carry out training and validation
         start = time.time()
-        predict(valid_loader, model)
+        # predict(valid_loader, model)
         train_loss = train(train_loader, model, optimizer, train_loss_hist)
         val_loss = validate(valid_loader, model, val_loss_hist)
         train_evaluator = evaluate(model, train_loader, DEVICE)
