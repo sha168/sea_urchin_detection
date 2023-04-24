@@ -190,10 +190,13 @@ def fine_tune(lr, epochs, prob_thresh):
         if (epoch + 1) % SAVE_PLOTS_EPOCH == 0:
             predict(valid_loader, model, prob_thresh)
 
+        if (epoch + 1) == epochs:  # save loss plots and model once at the end
+            torch.save(model.state_dict(), f"{OUT_DIR}/model.pth")
+
         # update the learning rate
         lr_scheduler.step()
-        print(f"Epoch #{epoch} train loss: {train_loss_hist.value:.3f}")
-        print(f"Epoch #{epoch} validation precision: {val_precision_hist.value:.3f}")
+        print(f"Epoch #{epoch +1} train loss: {train_loss_hist.value:.3f}")
+        #print(f"Epoch #{epoch +1} validation precision: {val_precision_hist.value:.3f}")
         end = time.time()
         print(f"Took {((end - start) / 60):.3f} minutes for epoch {epoch}")
         # if (epoch + 1) % SAVE_MODEL_EPOCH == 0:  # save model after every n epochs
