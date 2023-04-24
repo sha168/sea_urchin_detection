@@ -9,7 +9,7 @@ from sea_urchin_detection.bbox import BBox
 def test_video(path_to_input_stream_endpoint, path_to_output_stream_endpoint, pretrained, prob_thresh):
 
     path_to_input_stream_endpoint = 'gdrive/MyDrive/sea_urchin_data/videos/' + path_to_input_stream_endpoint
-    period_of_inference = 1
+    period_of_inference = 2
 
     model = create_model(num_classes=NUM_CLASSES_PT, pretrained=pretrained)
     model = model.to(DEVICE)
@@ -18,6 +18,7 @@ def test_video(path_to_input_stream_endpoint, path_to_output_stream_endpoint, pr
     # Initialize the video stream and pointer to output video file
     vs = cv2.VideoCapture(path_to_input_stream_endpoint)
     # vs.set(cv2.CAP_PROP_POS_FRAMES, 7000)
+    fps = vs.get(cv2.CAP_PROP_FPS) * period_of_inference
 
     if vs.isOpened() == False:
         print("Error reading video file")
@@ -31,7 +32,7 @@ def test_video(path_to_input_stream_endpoint, path_to_output_stream_endpoint, pr
 
     # Initialize our video writer
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-    writer = cv2.VideoWriter(path_to_output_stream_endpoint, fourcc, 5,
+    writer = cv2.VideoWriter(path_to_output_stream_endpoint, fourcc, fps,
                              size, True)
 
     i_f = 0
