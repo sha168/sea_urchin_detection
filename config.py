@@ -19,11 +19,11 @@ Path(OUT_DIR).mkdir(parents=True, exist_ok=True)
 
 DEVICE = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
-TRAIN_DIR = '/experiment/' + DATASET + '/train'
-VALID_DIR = '/experiment/' + DATASET + '/test'
+#TRAIN_DIR = '/experiment/' + DATASET + '/train'
+#VALID_DIR = '/experiment/' + DATASET + '/test'
 
-#TRAIN_DIR = 'gdrive/MyDrive/sea_urchin_data/' + DATASET + '/train'
-#VALID_DIR = 'gdrive/MyDrive/sea_urchin_data/' + DATASET + '/test'
+TRAIN_DIR = 'gdrive/MyDrive/sea_urchin_data/' + DATASET + '/train'
+VALID_DIR = 'gdrive/MyDrive/sea_urchin_data/' + DATASET + '/test'
 
 # TRAIN_DIR = '/Users/sha168/Downloads/' + DATASET + '/train'
 # VALID_DIR = '/Users/sha168/Downloads/' + DATASET + '/test'
