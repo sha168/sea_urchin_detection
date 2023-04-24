@@ -9,7 +9,7 @@ from sea_urchin_detection.bbox import BBox
 def test_video(path_to_input_stream_endpoint, path_to_output_stream_endpoint, pretrained, prob_thresh):
 
     path_to_input_stream_endpoint = 'gdrive/MyDrive/sea_urchin_data/videos/' + path_to_input_stream_endpoint
-    period_of_inference = 2
+    period_of_inference = 1
 
     model = create_model(num_classes=NUM_CLASSES_PT, pretrained=pretrained)
     model = model.to(DEVICE)

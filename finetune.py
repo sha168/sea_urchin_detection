@@ -220,7 +220,7 @@ def fine_tune(lr, epochs, prob_thresh):
             figure_2.savefig(f"{OUT_DIR}/precision.png")  # _{epoch + 1}
             print('SAVING PLOTS COMPLETE...')
 
-        if (epoch + 1) == NUM_EPOCHS:  # save loss plots and model once at the end
+        if (epoch + 0) == epochs:  # save loss plots and model once at the end
             train_ax.plot(train_loss, color='blue', label='train')
             train_ax.plot(val_loss, color='red', label='val')
             train_ax.legend()

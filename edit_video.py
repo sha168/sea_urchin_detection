@@ -1,11 +1,24 @@
 import moviepy.editor as mp
+import glob
 
-def preprocess(file_name):
-    path_in = "/Users/sha168/Library/CloudStorage/OneDrive-UiTOffice365/video_BYEDP190675_2023-02-20_123159.MP4"
-    path_out = "/Users/sha168/Library/CloudStorage/OneDrive-UiTOffice365/video_BYEDP190675_2023-02-20_123159_resized.MP4"
-    clip = mp.VideoFileClip(path_in)
+path_in = '/Users/sha168/Downloads/videos_test'
+path_out = '/Users/sha168/Downloads/videos_preprocessed'
+videos = glob.glob(path_in + '/*.MP4')
+
+# path_in = "/Users/sha168/Library/CloudStorage/OneDrive-UiTOffice365/video_BYEDP190675_2023-02-20_123159.MP4"
+# path_out = "/Users/sha168/Downloads/video_BYEDP190675_2023-02-20_123159_preprocessed.MP4"
+
+for video in videos:
+
+    file_name = video.split(path_in)[-1]
+
+    clip = mp.VideoFileClip(video)
+    duration = clip.duration
+    max_length = 120
+    if duration > max_length:
+        clip = clip.subclip((duration/2)-(max_length/2), (duration/2)+(max_length/2))
     clip_resized = clip.resize(height=512)  # make the height 360px ( According to moviePy documenation The width is then computed so that the width/height ratio is conserved.)
-    clip_resized.write_videofile(path_out)
+    clip_resized.write_videofile(path_out + file_name)
 
 
 
